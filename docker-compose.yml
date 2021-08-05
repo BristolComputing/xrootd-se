@@ -1,0 +1,13 @@
+version: '3.4'
+
+services:
+  xrootdse:
+    image: xrootdse
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+  xrootdgateway:
+    image: xrootdse
+    build:
+      context: .
+      dockerfile: ./Dockerfile
