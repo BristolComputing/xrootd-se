@@ -1,0 +1,8 @@
+## The following gives the user named "xrootd" full access to all the files
+## under /xrootd.
+## There must be at least one such user in order to create the
+## private dirs for users willing to store their data in the facility
+u xrootd /xrootd a
+
+# only for testing: everyone can write anywhere
+u * /xrootd rl

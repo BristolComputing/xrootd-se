@@ -6,8 +6,39 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
+    ports:
+      - "1094:1094"
+    links:
+      - xrootdgateway
+    volumes:
+      - type: bind
+        source: ./etc/xrootd
+        target: /etc/xrootd
+        read_only: true
+      - type: bind
+        source: ./data
+        target: /xrootd
   xrootdgateway:
     image: xrootdse
     build:
       context: .
       dockerfile: ./Dockerfile
+    ports:
+      - "1194:1094"
+    volumes:
+      - type: bind
+        source: ./etc/xrootd
+        target: /etc/xrootd
+        read_only: true
+      - type: bind
+        source: ./data
+        target: /xrootd
+  xrootdclient:
+    image: kreczko/xrootd-testing
+    build:
+      context: .devcontainer
+      dockerfile: ./Dockerfile
+    links:
+      - xrootdse
+      - xrootdgateway
+    command: /usr/bin/env bash
