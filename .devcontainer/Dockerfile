@@ -5,7 +5,9 @@ RUN yum update -y -q \
  && yum clean all \
  && rm -fr /var/cache/yum
 
-RUN yum -q -y install xrootd-client \
+RUN yum -q -y install \
+    iproute \
+    xrootd-client \
  && yum clean all \
  && rm -fr /var/cache/yum
 

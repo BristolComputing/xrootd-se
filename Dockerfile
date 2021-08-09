@@ -14,6 +14,7 @@ RUN groupadd -o -g 1000  xrootd
 RUN useradd -o -u 1000 -g 1000 -s /bin/sh xrootd
 
 RUN yum install -q -y \
+    iproute \
     xrootd \
     xrootd-client \
     xrootd-scitokens \
