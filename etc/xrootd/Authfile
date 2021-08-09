@@ -5,4 +5,4 @@
 u xrootd /xrootd a
 
 # only for testing: everyone can write anywhere
-u * /xrootd rl
+u * /xrootd a

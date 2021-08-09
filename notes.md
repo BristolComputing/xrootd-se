@@ -18,4 +18,22 @@ xrdcp /bin/sh  root://localhost:1094///xrootd/second_test
 docker-compose up -d
 docker-compose run  xrootdclient
 xrdcp /bin/sh  root://xrootdse:1094///xrootd/test
+xrdcp /bin/sh  root://172.19.0.3:1094///xrootd/test
+```
+
+
+```
+docker exec -ti xrootd-se_xrootdse_1 tail /var/log/xrootd/standalone/xrootd.log
+
+
+docker-compose run --rm  xrootdclient
+xrdcp /bin/sh  root://xrootdse:1094///xrootd/test
+
+
+docker exec -ti xrootd-se_xrootdse_1 supervisorctl restart xrootd-standalone
+```
+
+
+```
+https://dune.bnl.gov/wiki/Basic_XRootD
 ```
