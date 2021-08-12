@@ -46,3 +46,6 @@ services:
       - xrootdse
       - xrootdgateway
     command: /usr/bin/env bash
+    volumes:
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
