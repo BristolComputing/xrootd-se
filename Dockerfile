@@ -28,7 +28,7 @@ RUN yum install -q -y \
 # Default root dir
 ENV XC_ROOTDIR /xrootd
 
-ADD supervisord.d/* /etc/supervisord.d/
+# ADD supervisord.d/* /etc/supervisord.d/
 ADD image-config.d/* /etc/osg/image-config.d/
 # ADD etc/xrootd/* /etc/xrootd
 
