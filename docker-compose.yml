@@ -18,7 +18,7 @@ services:
         target: /etc/xrootd
         read_only: true
       - type: bind
-        source: ./etc/supervisor.d
+        source: ./etc/supervisord.d
         target: /etc/supervisord.d/
         read_only: true
       - type: bind
@@ -40,7 +40,7 @@ services:
         target: /etc/xrootd
         read_only: true
       - type: bind
-        source: ./etc/supervisor.d
+        source: ./etc/supervisord.d
         target: /etc/supervisord.d/
       - type: bind
         source: ./data
