@@ -5,4 +5,41 @@
 u xrootd /xrootd a
 
 # only for testing: everyone can write anywhere
-u * /xrootd a
+#u * /xrootd a
+
+
+###############################################################################################
+## PRODUCTION
+## docs: https://opensciencegrid.org/docs/data/xrootd/xrootd-authorization/#authorization-file
+###############################################################################################
+
+###############################################################################################
+### ATLAS
+###############################################################################################
+
+
+###############################################################################################
+### CMS
+###############################################################################################
+# Topics to summarize permissions
+t writecmsdata /xrootd/cms/store/backfill/          a  \
+               /xrootd/cms/store/data/              a  \
+               /xrootd/cms/store/generator/         a  \
+               /xrootd/cms/store/group/             a  \
+               /xrootd/cms/store/hidata/            a  \
+               /xrootd/cms/store/mc/                a  \
+               /xrootd/cms/store/PhEDEx_LoadTest07/ a  \
+               /xrootd/cms/store/relval/            a  \
+               /xrootd/cms/store/temp/              a  \
+               /xrootd/cms/store/unmerged/          a
+
+t readcmsdata  /xrootd/cms/store/                   lr
+
+# cmsprod and PhEDEx have full access to managed CMS data, and read for CMS
+u cmsprod  writecmsdata readcmsdata
+u cmsphedex writecmsdata readcmsdata
+
+# anyone else has read
+g cms readcmsdata
+
+# users have write access to /store/users
