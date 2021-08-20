@@ -27,6 +27,23 @@ services:
         target: /xrootd
       - "/etc/timezone:/etc/timezone:ro"
       - "/etc/localtime:/etc/localtime:ro"
+      - type: bind
+        source: /cvmfs/grid.cern.ch/etc/grid-security/certificates
+        target: /etc/grid-security/certificates
+        read_only: true
+      - type: bind
+        source: /cvmfs/grid.cern.ch/etc/grid-security/vomsdir
+        target: /etc/grid-security/vomsdir
+        read_only: true
+      - type: bind
+        source: /cvmfs/grid.cern.ch/etc/grid-security/vomses
+        target: /etc/grid-security/vomses
+        read_only: true
+      - type: bind
+        source: ./secrets/bristol/etc/grid-security/xrd-se
+        target: /etc/grid-security/xrd
+        read_only: true
+      
   io-37-02.acrc.bris.ac.uk:
     hostname: io-37-02.acrc.bris.ac.uk
     image: xrootdse
@@ -49,6 +66,22 @@ services:
         target: /xrootd
       - "/etc/timezone:/etc/timezone:ro"
       - "/etc/localtime:/etc/localtime:ro"
+      - type: bind
+        source: /cvmfs/grid.cern.ch/etc/grid-security/certificates
+        target: /etc/grid-security/certificates
+        read_only: true
+      - type: bind
+        source: /cvmfs/grid.cern.ch/etc/grid-security/vomsdir
+        target: /etc/grid-security/vomsdir
+        read_only: true
+      - type: bind
+        source: /cvmfs/grid.cern.ch/etc/grid-security/vomses
+        target: /etc/grid-security/vomses
+        read_only: true
+      - type: bind
+        source: ./secrets/bristol/etc/grid-security/xrd-gate
+        target: /etc/grid-security/xrd
+        read_only: true
   xrootdclient:
     hostname: xrootdclient
     image: kreczko/xrootd-testing
@@ -62,4 +95,7 @@ services:
     volumes:
       - "/etc/timezone:/etc/timezone:ro"
       - "/etc/localtime:/etc/localtime:ro"
-      - ~/.globus:~/.globus
+      - type: bind
+        source: $HOME/.globus
+        target: /home/xrootduser/.globus
+        read_only: true
