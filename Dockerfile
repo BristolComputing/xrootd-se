@@ -17,6 +17,7 @@ RUN yum install -q -y \
     iproute \
     xrootd \
     xrootd-client \
+    xrootd-lcmaps \
     xrootd-scitokens \
     xrootd-selinux \
     xrootd-server \
