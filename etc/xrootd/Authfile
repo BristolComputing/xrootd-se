@@ -17,6 +17,15 @@ u xrootd /xrootd a
 ###############################################################################################
 ### ATLAS
 ###############################################################################################
+# Topics to summarize permissions
+t writeatlasdata /xrootd/atlas/       a
+t readatlasdata  /xrootd/atlas/       lr
+
+# "/atlas/Role=production" has full access to managed CMS data and read for CMS
+u atlasprd  writeatlasdata readatlasdata
+
+# "/atlas/Role=lcgadmin" ???
+u atlassgm writeatlasdata
 
 
 ###############################################################################################
@@ -42,16 +51,15 @@ t writecmsdata /xrootd/cms/store/backfill/       a \
 
 t readcmsdata  /xrootd/cms/store/                lr
 
-# cmsprod and PhEDEx have full access to managed CMS data, and read for CMS
-u cmsprod  writecmsdata readcmsdata
-u cmsphedex writecmsdata readcmsdata
+# "/cms/Role=production" has full access to managed CMS data and read for CMS
+u cmsprd  writecmsdata readcmsdata
 
-# lcgadmin can write into /store/user/sam and /store/unmerged/SAM.
-u lcgadmin /xrootd/cms/store/user/sam/ a \
+# "/cms/Role=lcgadmin" can write into /store/user/sam and /store/unmerged/SAM.
+u cmssgm /xrootd/cms/store/user/sam/ a \
            /xrootd/cms/store/unmerged/SAM a \
            readcmsdata
 
-# CMS users have full access to their own directory, and read for CMS
+# CMS users have full access to their own directory and temp, and read for CMS
 # While xrootd allows the user to *attempt* any operation - even in other user's
 # home directories
 g /cms /xrootd/cms/store/user/ a \
@@ -64,8 +72,116 @@ g /cms /xrootd/cms/store/user/ a \
 # x cmsusr /xrootd/cms/store/user/ a \
 #          readcmsdata
 
+###############################################################################################
+### dteam
+###############################################################################################
+# Topics to summarize permissions
+t writedteamdata /xrootd/dteam/       a
+t readdteamdata  /xrootd/dteam/       lr
 
+# "/dteam/Role=production" has full access to managed CMS data and read for CMS
+u dteamprd  writedteamdata readdteamdata
+
+# "/dteam/Role=lcgadmin"
+u dteamsgm writedteamdata
+
+g /dteam /xrootd/dteam/user a \
+         /xrootd/dteam/temp a \
+         readdteamdata
 
 ###############################################################################################
 ### DUNE
 ###############################################################################################
+# Topics to summarize permissions
+t writedunedata /xrootd/dune/     a \
+                /xrootd/dune/temp a
+
+t readdunedata /xrootd/dune/      lr
+
+# "/dune/Role=production" has full access to managed CMS data and read for CMS
+u duneprod  writedunedata readdunedata
+
+# no entry in grid-mapfile
+= dunesgm o: dune g: /dune r: /dune/Role=lcgadmin
+# "/dune/Role=lcgadmin" ???
+x dunesgm writedunedata readdunedata
+
+g /dune /xrootd/dune/user a \
+        /xrootd/dune/temp a \
+        readdunedata
+
+###############################################################################################
+### GridPP
+###############################################################################################
+# Topics to summarize permissions
+t writegridppdata /xrootd/gridpp/       a
+t readgridppdata  /xrootd/gridpp/       lr
+
+# "/gridpp/Role=production" has full access to managed CMS data and read for CMS
+u gridppprd  writegridppdata readgridppdata
+
+# "/gridpp/Role=lcgadmin"
+u gridppsgm writegridppdata readgridppdata
+
+g /gridpp /xrootd/gridpp/user a \
+          /xrootd/gridpp/temp a \
+          readgridppdata
+
+###############################################################################################
+### LUX-Zeplin
+###############################################################################################
+# Topics to summarize permissions
+t writelzdata /xrootd/lz/data     a \
+              /xrootd/lz/mc       a \
+              /xrootd/lz/temp     a
+
+t readlzdata /xrootd/lz/      lr
+
+# "/lz/Role=production" has full access to managed CMS data and read for CMS
+u lzprod writelzdata readlzdata
+
+# no entry in grid-mapfile
+= lzsgm o: lz g: /lz r: /lz/Role=lcgadmin
+# "/lz/Role=lcgadmin" ???
+x lzsgm writelzdata readlzdata
+
+g /lz /xrootd/lz/user a \
+      /xrootd/lz/temp a \
+      readlzdata
+
+###############################################################################################
+### Mu3e
+###############################################################################################
+# Topics to summarize permissions
+t writemu3edata /xrootd/mu3e/     a
+
+t readmu3edata /xrootd/mu3e/      lr
+
+# "/mu3e/Role=production" has full access to managed CMS data and read for CMS
+u mu3eprod  writemu3edata readmu3edata
+
+# no entry in grid-mapfile
+= mu3esgm o: mu3e g: /mu3e r: /mu3e/Role=lcgadmin
+# "/mu3e/Role=lcgadmin" ???
+x mu3esgm writemu3edata readmu3edata
+
+g /mu3e /xrootd/mu3e/user a \
+        /xrootd/mu3e/temp a \
+        readmu3edata
+
+###############################################################################################
+### OPS
+###############################################################################################
+# Topics to summarize permissions
+t writeopsdata /xrootd/ops/       a
+t readopsdata  /xrootd/ops/       lr
+
+# "/ops/Role=production" has full access to managed CMS data and read for CMS
+u opsprd  writeopsdata readopsdata
+
+# "/ops/Role=lcgadmin"
+u opssgm writeopsdata readopsdata
+
+g /ops /xrootd/ops/user a \
+       /xrootd/ops/temp a \
+       readopsdata
