@@ -32,5 +32,7 @@ ENV XC_ROOTDIR /xrootd
 # ADD supervisord.d/* /etc/supervisord.d/
 ADD image-config.d/* /etc/osg/image-config.d/
 # ADD etc/xrootd/* /etc/xrootd
+RUN ln -s /etc/grid-security/xrd/hostcert.pem /etc/grid-security/hostcert.pem \
+  && ln -s /etc/grid-security/xrd/hostkey.pem /etc/grid-security/hostkey.pem
 
 VOLUME /xrootd
