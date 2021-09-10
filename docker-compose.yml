@@ -48,10 +48,6 @@ services:
         target: /etc/grid-security/grid-mapfile
         read_only: true
       - type: bind
-        source: ./.secrets/bristol/etc/grid-security/macaroon-secret
-        target: /etc/grid-security/macaroon-secret
-        read_only: true
-      - type: bind
         source: ./etc/lcmaps
         target: /etc/lcmaps
         read_only: true
@@ -97,10 +93,6 @@ services:
       - type: bind
         source: ./.secrets/bristol/etc/grid-security/grid-mapfile
         target: /etc/grid-security/grid-mapfile
-        read_only: true
-      - type: bind
-        source: ./.secrets/bristol/etc/grid-security/macaroon-secret
-        target: /etc/grid-security/macaroon-secret
         read_only: true
       - type: bind
         source: ./etc/lcmaps
