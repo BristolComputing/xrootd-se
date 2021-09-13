@@ -1,0 +1,28 @@
+[Unit]
+Description=xrootd-se
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+Restart=always
+ExecStartPre=-/usr/bin/docker exec %n stop
+ExecStartPre=-/usr/bin/docker rm %n
+ExecStartPre=/usr/bin/docker pull jetbrains/youtrack:<version>
+ExecStart=/usr/bin/docker run --rm --name %n \
+    -v /var/log/xrootd:/var/log/xrootd \
+    -v /opt/xrootd-se/etc/xrootd:/etc/xrootd:ro \
+    -v /opt/xrootd-se/etc/supervisord.d:/etc/supervisord.d:ro \
+    -v /opt/xrootd-se/.secrets/prod:/.secrets:ro \
+    -v /etc/timezone:/etc/timezone:ro \
+    -v /etc/localtime:/etc/localtime:ro \
+    -v /cvmfs/grid.cern.ch/etc/grid-security/certificates:/etc/grid-security/certificates:ro \
+    -v /cvmfs/grid.cern.ch/etc/grid-security/vomsdir:/etc/grid-security/vomsdir:ro \
+    -v /cvmfs/grid.cern.ch/etc/grid-security/vomses:/etc/grid-security/vomses:ro \
+    -p 443:443 \
+    -p 1094:1094 \
+    -p 3121:3121 \
+    xrootd-se:latest
+
+[Install]
+WantedBy=default.target
