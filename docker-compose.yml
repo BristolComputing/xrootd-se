@@ -40,16 +40,8 @@ services:
         target: /etc/grid-security/vomses
         read_only: true
       - type: bind
-        source: ./.secrets/bristol/etc/grid-security/xrd-se
-        target: /etc/grid-security/xrd
-        read_only: true
-      - type: bind
-        source: ./.secrets/bristol/etc/grid-security/grid-mapfile
-        target: /etc/grid-security/grid-mapfile
-        read_only: true
-      - type: bind
-        source: ./etc/lcmaps
-        target: /etc/lcmaps
+        source: ./.secrets/prod
+        target: /.secrets
         read_only: true
       
   io-37-02.acrc.bris.ac.uk:
@@ -87,16 +79,8 @@ services:
         target: /etc/grid-security/vomses
         read_only: true
       - type: bind
-        source: ./.secrets/bristol/etc/grid-security/xrd-gate
-        target: /etc/grid-security/xrd
-        read_only: true
-      - type: bind
-        source: ./.secrets/bristol/etc/grid-security/grid-mapfile
-        target: /etc/grid-security/grid-mapfile
-        read_only: true
-      - type: bind
-        source: ./etc/lcmaps
-        target: /etc/lcmaps
+        source: ./.secrets/prod
+        target: /.secrets
         read_only: true
   xrootdclient:
     hostname: xrootdclient

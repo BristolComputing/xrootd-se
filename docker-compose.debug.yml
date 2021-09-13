@@ -1,8 +1,101 @@
 version: '3.4'
 
 services:
-  xrootdse:
+  xrootd.phy.bris.ac.uk:
+    hostname: xrootd.phy.bris.ac.uk
     image: xrootdse
     build:
       context: .
       dockerfile: ./Dockerfile
+    ports:
+      - "443:443" # HTTPS public port
+      - "1094:1094" # xrootd public port
+      - "3121:3121" # cluster manager, site-internal
+    links:
+      - io-37-02.acrc.bris.ac.uk
+    volumes:
+      - type: bind
+        source: ./etc/xrootd
+        target: /etc/xrootd
+        read_only: true
+      - type: bind
+        source: ./etc/supervisord.d
+        target: /etc/supervisord.d/
+        read_only: true
+      - type: bind
+        source: ./data
+        target: /xrootd
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+      - type: bind
+        source: /cvmfs/grid.cern.ch/etc/grid-security/certificates
+        target: /etc/grid-security/certificates
+        read_only: true
+      - type: bind
+        source: /cvmfs/grid.cern.ch/etc/grid-security/vomsdir
+        target: /etc/grid-security/vomsdir
+        read_only: true
+      - type: bind
+        source: /cvmfs/grid.cern.ch/etc/grid-security/vomses
+        target: /etc/grid-security/vomses
+        read_only: true
+      - type: bind
+        source: ./.secrets/prod
+        target: /.secrets
+        read_only: true
+      
+  io-37-02.acrc.bris.ac.uk:
+    hostname: io-37-02.acrc.bris.ac.uk
+    image: xrootdse
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "8443:443" # HTTPS public port
+      - "1194:1094" # xrootd public port
+    volumes:
+      - type: bind
+        source: ./etc/xrootd
+        target: /etc/xrootd
+        read_only: true
+      - type: bind
+        source: ./etc/supervisord.d
+        target: /etc/supervisord.d/
+      - type: bind
+        source: ./data
+        target: /xrootd
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+      - type: bind
+        source: /cvmfs/grid.cern.ch/etc/grid-security/certificates
+        target: /etc/grid-security/certificates
+        read_only: true
+      - type: bind
+        source: /cvmfs/grid.cern.ch/etc/grid-security/vomsdir
+        target: /etc/grid-security/vomsdir
+        read_only: true
+      - type: bind
+        source: /cvmfs/grid.cern.ch/etc/grid-security/vomses
+        target: /etc/grid-security/vomses
+        read_only: true
+      - type: bind
+        source: ./.secrets/testing
+        target: /.secrets
+        read_only: true
+  xrootdclient:
+    hostname: xrootdclient
+    image: kreczko/xrootd-testing
+    build:
+      context: .devcontainer
+      dockerfile: ./Dockerfile
+    links:
+      - xrootd.phy.bris.ac.uk
+      - io-37-02.acrc.bris.ac.uk
+    command: /usr/bin/env bash
+    volumes:
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+      - type: bind
+        source: $HOME/.globus
+        target: /home/xrootduser/.globus
+        read_only: true
