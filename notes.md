@@ -1,10 +1,15 @@
-https://github.com/opensciencegrid/docker-xrootd-standalone
-https://github.com/opensciencegrid/docker-software-base
-https://dune.bnl.gov/wiki/Basic_XRootD
-https://github.com/xrootd/xrootd/issues/1268
-https://gridpp-storage.blogspot.com/2019/10/modern-account-mapping-for-cephxrootd.html
+# Notes
 
-https://towardsdatascience.com/hdfs-simple-docker-installation-guide-for-data-science-workflow-b3ca764fc94b
+## Useful links
+
+- https://github.com/opensciencegrid/docker-xrootd-standalone
+- https://github.com/opensciencegrid/docker-software-base
+- https://dune.bnl.gov/wiki/Basic_XRootD
+- https://github.com/xrootd/xrootd/issues/1268
+- https://gridpp-storage.blogspot.com/2019/10/modern-account-mapping-for-cephxrootd.html
+- https://twiki.cern.ch/twiki/bin/view/CMSPublic/XRootDoverHTTP
+- https://towardsdatascience.com/hdfs-simple-docker-installation-guide-for-data-science-workflow-b3ca764fc94b
+- https://www.digitalocean.com/community/tutorials/how-to-use-systemctl-to-manage-systemd-services-and-units
 
 ```
 docker run --rm --publish 1094:1094 \
@@ -28,15 +33,6 @@ xrdcp /bin/sh  root://172.19.0.3:1094///xrootd/test
 
 
 ```
-docker exec -ti xrootd-se_xrootdse_1 tail /var/log/xrootd/standalone/xrootd.log
-docker exec -ti xrootd-se_xrootdse_1 tail /var/log/xrootd/clustered/xrootd.log
-docker exec -ti xrootd-se_xrootdgateway_1 tail /var/log/xrootd/clustered/xrootd.log
-
-
-docker-compose run --rm  xrootdclient
-xrdcp /bin/sh  root://xrootdse:1094///xrootd/test
-
-
 docker exec -ti xrootd-se_${xrootdse}_1 supervisorctl restart xrootd-standalone
 docker exec -ti xrootd-se_${xrootdse}_1 supervisorctl restart xrootd-clustered
 docker exec -ti xrootd-se_${xrootdgateway}_1 supervisorctl restart xrootd-clustered
