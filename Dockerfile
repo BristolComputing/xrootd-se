@@ -33,7 +33,9 @@ ENV XC_ROOTDIR /xrootd
 ADD image-config.d/* /etc/osg/image-config.d/
 # ADD etc/xrootd/* /etc/xrootd
 # link secrets
-RUN ln -s /.secrets/xrd /etc/grid-security/xrd \
+RUN rm -f /etc/grid-security/ban-mapfile \
+  && rm -f /etc/grid-security/ban-voms-mapfile \
+  && ln -s /.secrets/xrd /etc/grid-security/xrd \
   && ln -s /etc/grid-security/xrd/hostcert.pem /etc/grid-security/hostcert.pem \
   && ln -s /etc/grid-security/xrd/hostkey.pem /etc/grid-security/hostkey.pem \
   && ln -s /.secrets/grid-security/ban-mapfile /etc/grid-security/ban-mapfile \
