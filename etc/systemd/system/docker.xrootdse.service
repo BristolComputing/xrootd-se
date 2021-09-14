@@ -10,7 +10,7 @@ ExecStartPre=-/usr/bin/docker exec %n stop
 ExecStartPre=-/usr/bin/docker rm %n
 ExecStartPre=/usr/bin/docker pull jetbrains/youtrack:<version>
 ExecStart=/usr/bin/docker run --rm --name %n \
-    --network=host \
+    --hostname=xrootdsefqdn \
     -v /var/log/xrootd:/var/log/xrootd \
     -v /opt/xrootd-se/etc/xrootd:/etc/xrootd:ro \
     -v /opt/xrootd-se/etc/supervisord.d:/etc/supervisord.d:ro \
