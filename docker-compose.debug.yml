@@ -40,7 +40,7 @@ services:
         target: /etc/grid-security/vomses
         read_only: true
       - type: bind
-        source: ./.secrets/prod
+        source: ./.secrets/testing/xrootdse
         target: /.secrets
         read_only: true
       
@@ -79,7 +79,7 @@ services:
         target: /etc/grid-security/vomses
         read_only: true
       - type: bind
-        source: ./.secrets/testing
+        source: ./.secrets/testing/xrootdgateway
         target: /.secrets
         read_only: true
   xrootdclient:
