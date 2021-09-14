@@ -56,7 +56,7 @@ u cmsprd  writecmsdata readcmsdata
 
 # "/cms/Role=lcgadmin" can write into /store/user/sam and /store/unmerged/SAM.
 u cmssgm /xrootd/cms/store/user/sam/ a \
-           /xrootd/cms/store/unmerged/SAM a \
+           /xrootd/cms/store/unmerged/SAM/ a \
            readcmsdata
 
 # CMS users have full access to their own directory and temp, and read for CMS

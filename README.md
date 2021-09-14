@@ -4,6 +4,10 @@ XrootD SE deployment
 
 ## Prerequisites
 
+### storage super-user
+
+The storage system, e.g. HDFS, needs to know the `xrootd` user which should have the same UID
+
 ### Docker
 
 ```bash
@@ -18,6 +22,11 @@ or configure with puppet
 ### CVMFS
 
 --> Configure with Puppet
+
+### Directory structure (first-time-only)
+
+Any folder referenced in etc/xrootd/Authfile needs to be created first
+
 
 ## Production
 
@@ -40,9 +49,11 @@ cp ~/macaroon-secret .secrets/prod/etc/xrootd
 docker-compose build .
 docker tag xrootdse xrootdse:latest
 
+# setting up service
 cp etc/systemd/system/docker.xrootdse.service /etc/systemd/system/docker.xrootdse.service
-systemctl enable docker.xrootd
-systemctl start docker.xrootd
+sed -i "s/xrootdseqfqdm/$(hostname -f)/g" /etc/systemd/system/docker.xrootdse.service
+systemctl enable docker.xrootdse
+systemctl start docker.xrootdse
 
 ```
 
@@ -64,6 +75,12 @@ cp ~/macaroon-secret .secrets/prod/etc/xrootd
 # building container
 docker-compose build .
 docker tag xrootdse xrootdse:latest
+
+# setting up service
+cp etc/systemd/system/docker.xrootdse.service /etc/systemd/system/docker.xrootdse.service
+sed -i "s/xrootdseqfqdm/$(hostname -f)/g" /etc/systemd/system/docker.xrootdse.service
+systemctl enable docker.xrootdse
+systemctl start docker.xrootdse
 ```
 
 ### Updating
