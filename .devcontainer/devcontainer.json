@@ -2,7 +2,7 @@
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.140.1/containers/cpp
 {
 	"name": "xroot-testing",
-	"dockerComposeFile": ["../docker-compose.yml", "docker-compose.extend.yml"],
+	"dockerComposeFile": ["../docker-compose.debug.yml", "docker-compose.extend.yml"],
 	"service": "xrootdclient",
 	"workspaceFolder": "/workspace",
 
