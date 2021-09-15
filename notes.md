@@ -10,6 +10,7 @@
 - https://twiki.cern.ch/twiki/bin/view/CMSPublic/XRootDoverHTTP
 - https://towardsdatascience.com/hdfs-simple-docker-installation-guide-for-data-science-workflow-b3ca764fc94b
 - https://www.digitalocean.com/community/tutorials/how-to-use-systemctl-to-manage-systemd-services-and-units
+- https://github.com/paulmillar/http-tpc-utils.git
 
 ```
 docker run --rm --publish 1094:1094 \
