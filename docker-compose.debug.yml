@@ -51,8 +51,8 @@ services:
       context: .
       dockerfile: ./Dockerfile
     ports:
-      - "8443:443" # HTTPS public port
-      - "1194:1094" # xrootd public port
+      - "8443:8443" # HTTPS public port
+      - "1194:1194" # xrootd public port
     volumes:
       - type: bind
         source: ./etc/xrootd
