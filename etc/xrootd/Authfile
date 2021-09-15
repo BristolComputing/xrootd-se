@@ -87,13 +87,14 @@ u dteamsgm writedteamdata
 
 g /dteam /xrootd/dteam/user/ a \
          /xrootd/dteam/temp/ a \
+         /xrootd/dteam/test/ a \
          readdteamdata
 
 ###############################################################################################
 ### DUNE
 ###############################################################################################
 # Topics to summarize permissions
-t writedunedata /xrootd/dune/     a \
+t writedunedata /xrootd/dune/      a \
                 /xrootd/dune/temp/ a
 
 t readdunedata /xrootd/dune/      lr
