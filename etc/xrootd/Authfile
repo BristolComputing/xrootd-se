@@ -85,8 +85,8 @@ u dteamprd  writedteamdata readdteamdata
 # "/dteam/Role=lcgadmin"
 u dteamsgm writedteamdata
 
-g /dteam /xrootd/dteam/user a \
-         /xrootd/dteam/temp a \
+g /dteam /xrootd/dteam/user/ a \
+         /xrootd/dteam/temp/ a \
          readdteamdata
 
 ###############################################################################################
@@ -94,7 +94,7 @@ g /dteam /xrootd/dteam/user a \
 ###############################################################################################
 # Topics to summarize permissions
 t writedunedata /xrootd/dune/     a \
-                /xrootd/dune/temp a
+                /xrootd/dune/temp/ a
 
 t readdunedata /xrootd/dune/      lr
 
@@ -106,8 +106,8 @@ u duneprod  writedunedata readdunedata
 # "/dune/Role=lcgadmin" ???
 x dunesgm writedunedata readdunedata
 
-g /dune /xrootd/dune/user a \
-        /xrootd/dune/temp a \
+g /dune /xrootd/dune/user/ a \
+        /xrootd/dune/temp/ a \
         readdunedata
 
 ###############################################################################################
@@ -123,17 +123,17 @@ u gridppprd  writegridppdata readgridppdata
 # "/gridpp/Role=lcgadmin"
 u gridppsgm writegridppdata readgridppdata
 
-g /gridpp /xrootd/gridpp/user a \
-          /xrootd/gridpp/temp a \
+g /gridpp /xrootd/gridpp/user/ a \
+          /xrootd/gridpp/temp/ a \
           readgridppdata
 
 ###############################################################################################
 ### LUX-Zeplin
 ###############################################################################################
 # Topics to summarize permissions
-t writelzdata /xrootd/lz/data     a \
-              /xrootd/lz/mc       a \
-              /xrootd/lz/temp     a
+t writelzdata /xrootd/lz/data/     a \
+              /xrootd/lz/mc/       a \
+              /xrootd/lz/temp/     a
 
 t readlzdata /xrootd/lz/      lr
 
@@ -145,8 +145,8 @@ u lzprod writelzdata readlzdata
 # "/lz/Role=lcgadmin" ???
 x lzsgm writelzdata readlzdata
 
-g /lz /xrootd/lz/user a \
-      /xrootd/lz/temp a \
+g /lz /xrootd/lz/user/ a \
+      /xrootd/lz/temp/ a \
       readlzdata
 
 ###############################################################################################
@@ -165,8 +165,8 @@ u mu3eprod  writemu3edata readmu3edata
 # "/mu3e/Role=lcgadmin" ???
 x mu3esgm writemu3edata readmu3edata
 
-g /mu3e /xrootd/mu3e/user a \
-        /xrootd/mu3e/temp a \
+g /mu3e /xrootd/mu3e/user/ a \
+        /xrootd/mu3e/temp/ a \
         readmu3edata
 
 ###############################################################################################
@@ -182,6 +182,6 @@ u opsprd  writeopsdata readopsdata
 # "/ops/Role=lcgadmin"
 u opssgm writeopsdata readopsdata
 
-g /ops /xrootd/ops/user a \
-       /xrootd/ops/temp a \
+g /ops /xrootd/ops/user/ a \
+       /xrootd/ops/temp/ a \
        readopsdata
