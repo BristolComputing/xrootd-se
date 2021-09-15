@@ -1,0 +1,3 @@
+[submodule "tests/http-tpc-utils"]
+	path = tests/http-tpc-utils
+	url = https://github.com/paulmillar/http-tpc-utils.git
