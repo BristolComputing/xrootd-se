@@ -35,13 +35,13 @@ ADD image-config.d/* /etc/osg/image-config.d/
 # link secrets
 RUN rm -f /etc/grid-security/ban-mapfile \
   && rm -f /etc/grid-security/ban-voms-mapfile \
-  && ln -s /.secrets/xrd /etc/grid-security/xrd \
+  && ln -s /.secrets/etc/grid-security/xrd /etc/grid-security/xrd \
   && ln -s /etc/grid-security/xrd/hostcert.pem /etc/grid-security/hostcert.pem \
   && ln -s /etc/grid-security/xrd/hostkey.pem /etc/grid-security/hostkey.pem \
-  && ln -s /.secrets/grid-security/ban-mapfile /etc/grid-security/ban-mapfile \
-  && ln -s /.secrets/grid-security/ban-voms-mapfile /etc/grid-security/ban-voms-mapfile \
-  && ln -s /.secrets/grid-security/grid-mapfile /etc/grid-security/grid-mapfile \
-  && ln -s /.secrets/grid-security/voms-mapfile /etc/grid-security/voms-mapfile \
+  && ln -s /.secrets/etc/grid-security/ban-mapfile /etc/grid-security/ban-mapfile \
+  && ln -s /.secrets/etc/grid-security/ban-voms-mapfile /etc/grid-security/ban-voms-mapfile \
+  && ln -s /.secrets/etc/grid-security/grid-mapfile /etc/grid-security/grid-mapfile \
+  && ln -s /.secrets/etc/grid-security/voms-mapfile /etc/grid-security/voms-mapfile \
   && ln -s /.secrets/etc/xrootd/macaroon-secret /etc/xrootd/macaroon-secret
 
 VOLUME /xrootd
