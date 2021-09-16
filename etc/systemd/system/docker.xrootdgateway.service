@@ -4,11 +4,11 @@ After=docker.service
 Requires=docker.service
 
 [Service]
+WorkingDirectory=/opt/xrootd-se
 TimeoutStartSec=0
 Restart=always
 ExecStartPre=-/usr/bin/docker exec %n stop
 ExecStartPre=-/usr/bin/docker rm %n
-ExecStartPre=/usr/bin/docker pull jetbrains/youtrack:<version>
 ExecStart=/usr/bin/docker run --rm --name %n \
     --hostname=xrootdsefqdn \
     -v /var/log/xrootd:/var/log/xrootd \
@@ -22,7 +22,7 @@ ExecStart=/usr/bin/docker run --rm --name %n \
     -v /cvmfs/grid.cern.ch/etc/grid-security/vomses:/etc/grid-security/vomses:ro \
     -p 8443:8443 \
     -p 1194:1194 \
-    xrootd-se:latest
+    xrootdse:latest
 
 [Install]
 WantedBy=default.target
