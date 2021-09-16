@@ -9,9 +9,12 @@ RUN yum update -y && \
   rm -rf /var/cache/yum/*
 
 # Create the xrootd user with a fixed GID/UID
-# OSG default ID 10940
-RUN groupadd -o -g 1000  xrootd
-RUN useradd -o -u 1000 -g 1000 -s /bin/sh xrootd
+# OSG default ID 10940 but we want 1000
+ARG XROOTD_GID=1000
+ARG XROOTD_UID=1000
+
+RUN groupadd -o -g ${XROOTD_GID}  xrootd
+RUN useradd -o -u ${XROOTD_UID} -g ${XROOTD_GID} -s /bin/sh xrootd
 
 RUN yum install -q -y \
     iproute \
