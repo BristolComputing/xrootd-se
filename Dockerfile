@@ -18,6 +18,7 @@ RUN useradd -o -u ${XROOTD_UID} -g ${XROOTD_GID} -s /bin/sh xrootd
 
 RUN yum install -q -y \
     iproute \
+    java-1.8.0-openjdk-headless \
     xrootd \
     xrootd-client \
     xrootd-lcmaps \
@@ -45,6 +46,10 @@ RUN rm -f /etc/grid-security/ban-mapfile \
   && ln -s /.secrets/etc/grid-security/ban-voms-mapfile /etc/grid-security/ban-voms-mapfile \
   && ln -s /.secrets/etc/grid-security/grid-mapfile /etc/grid-security/grid-mapfile \
   && ln -s /.secrets/etc/grid-security/voms-mapfile /etc/grid-security/voms-mapfile \
-  && ln -s /.secrets/etc/xrootd/macaroon-secret /etc/xrootd/macaroon-secret
+  && ln -s /.secrets/etc/xrootd/macaroon-secret /etc/xrootd/macaroon-secret \
+  && ln -s /opt/cloudera/parcels/CDH/bin/hadoop /usr/bin/hadoop \
+  && ln -s /opt/cloudera/parcels/CDH/bin/hadoop-0.20 /usr/bin/hadoop-0.20 \
+  && ln -s /opt/cloudera/parcels/CDH/bin/hadoop-fuse-dfs /usr/bin/hadoop-fuse-dfs \
+  && ln -s /opt/cloudera/parcels/CDH/bin/hdfs /usr/bin/hdfs
 
 VOLUME /xrootd
