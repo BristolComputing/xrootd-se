@@ -52,4 +52,6 @@ RUN rm -f /etc/grid-security/ban-mapfile \
   && ln -s /opt/cloudera/parcels/CDH/bin/hadoop-fuse-dfs /usr/bin/hadoop-fuse-dfs \
   && ln -s /opt/cloudera/parcels/CDH/bin/hdfs /usr/bin/hdfs
 
+ENV HADOOP_CONF_DIR=/opt/cloudera/parcels/CDH/etc/hadoop/conf.dist
+
 VOLUME /xrootd
