@@ -16,11 +16,13 @@ ARG XROOTD_UID=1000
 RUN groupadd -o -g ${XROOTD_GID}  xrootd
 RUN useradd -o -u ${XROOTD_UID} -g ${XROOTD_GID} -s /bin/sh xrootd
 
+# hadoop-*, (xrootd-hdfs dependency) in OSG is badly packed, hadoop-* pulls X11, cups, etc.
 RUN yum install -q -y \
     iproute \
     java-1.8.0-openjdk-headless \
     xrootd \
     xrootd-client \
+    xrootd-hdfs \
     xrootd-lcmaps \
     xrootd-scitokens \
     xrootd-selinux \
