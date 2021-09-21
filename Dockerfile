@@ -49,6 +49,8 @@ RUN rm -f /etc/grid-security/ban-mapfile \
   && ln -s /.secrets/etc/grid-security/grid-mapfile /etc/grid-security/grid-mapfile \
   && ln -s /.secrets/etc/grid-security/voms-mapfile /etc/grid-security/voms-mapfile \
   && ln -s /.secrets/etc/xrootd/macaroon-secret /etc/xrootd/macaroon-secret \
+  && rm -f /usr/bin/hadoop* \
+  && rm -f /usr/bin/hdfs* \
   && ln -s /opt/cloudera/parcels/CDH/bin/hadoop /usr/bin/hadoop \
   && ln -s /opt/cloudera/parcels/CDH/bin/hadoop-0.20 /usr/bin/hadoop-0.20 \
   && ln -s /opt/cloudera/parcels/CDH/bin/hadoop-fuse-dfs /usr/bin/hadoop-fuse-dfs \
