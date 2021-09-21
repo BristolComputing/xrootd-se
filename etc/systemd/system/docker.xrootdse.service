@@ -19,7 +19,8 @@ ExecStart=/usr/bin/docker run --rm --name %n \
     -v /cvmfs/grid.cern.ch/etc/grid-security/certificates:/etc/grid-security/certificates:ro \
     -v /cvmfs/grid.cern.ch/etc/grid-security/vomsdir:/etc/grid-security/vomsdir:ro \
     -v /cvmfs/grid.cern.ch/etc/grid-security/vomses:/etc/grid-security/vomses:ro \
-    -p 443:443 \
+    -v /opt/cloudera:/opt/cloudera:ro \
+    -v /etc/hadoop:/etc/hadoop:ro \
     -p 1094:1094 \
     -p 3121:3121 \
     xrootdse:latest
