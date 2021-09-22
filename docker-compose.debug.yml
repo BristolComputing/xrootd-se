@@ -99,3 +99,24 @@ services:
         source: $HOME/.globus
         target: /home/xrootduser/.globus
         read_only: true
+  namenode:
+    image: uhopper/hadoop-namenode
+    hostname: namenode
+    container_name: namenode
+    domainname: hadoop
+    volumes:
+      - ./data/namenode:/hadoop/dfs/name
+    environment:
+      - CLUSTER_NAME=xtest
+        ports:
+      - "8020:8020"
+  datanode1:
+    image: uhopper/hadoop-datanode
+    hostname: datanode1
+    container_name: datanode1
+    domainname: hadoop
+    net: hadoop
+    volumes:
+      - ./data/datanode1:/hadoop/dfs/data
+    environment:
+      - CORE_CONF_fs_defaultFS=hdfs://namenode:8020
