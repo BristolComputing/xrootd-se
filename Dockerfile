@@ -51,10 +51,12 @@ RUN rm -f /etc/grid-security/ban-mapfile \
   && ln -s /.secrets/etc/xrootd/macaroon-secret /etc/xrootd/macaroon-secret \
   && rm -f /usr/bin/hadoop* \
   && rm -f /usr/bin/hdfs* \
+  && rm -f /etc/alternatives/hadoop-conf \
   && ln -s /opt/cloudera/parcels/CDH/bin/hadoop /usr/bin/hadoop \
   && ln -s /opt/cloudera/parcels/CDH/bin/hadoop-0.20 /usr/bin/hadoop-0.20 \
   && ln -s /opt/cloudera/parcels/CDH/bin/hadoop-fuse-dfs /usr/bin/hadoop-fuse-dfs \
-  && ln -s /opt/cloudera/parcels/CDH/bin/hdfs /usr/bin/hdfs
+  && ln -s /opt/cloudera/parcels/CDH/bin/hdfs /usr/bin/hdfs \
+  && ln -s /etc/hadoop/conf.cloudera.hdfs /etc/alternatives/hadoop-conf
 
 ENV HADOOP_CONF_DIR=/etc/hadoop/conf.cloudera.hdfs
 
