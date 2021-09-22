@@ -15,3 +15,9 @@ STORE=/xrootd/cms/store/NOWRITEACCESSHERE
 xrdcp /bin/sh root://xrootd.phy.bris.ac.uk:1094//$STORE/test
 xrdfs xrootd.phy.bris.ac.uk:1094 ls $STORE/
 xrdfs xrootd.phy.bris.ac.uk:1094 query checksum $STORE/test
+
+
+STORE=/xrootd/dteam/user/kreczko
+xrdcp /bin/sh root://xrootd.phy.bris.ac.uk:1094//$STORE/test
+xrdfs xrootd.phy.bris.ac.uk:1094 ls $STORE/
+xrdfs xrootd.phy.bris.ac.uk:1094 query checksum $STORE/test
