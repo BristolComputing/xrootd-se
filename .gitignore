@@ -130,3 +130,7 @@ dmypy.json
 
 .secrets
 data/*
+
+# some configs have special places
+etc/xrootd/config.d/*hdfs*.cfg
+etc/xrootd/config.d/*posix*.cfg
