@@ -108,14 +108,13 @@ services:
       - ./data/namenode:/hadoop/dfs/name
     environment:
       - CLUSTER_NAME=xtest
-        ports:
+    ports:
       - "8020:8020"
   datanode1:
     image: uhopper/hadoop-datanode
     hostname: datanode1
     container_name: datanode1
     domainname: hadoop
-    net: hadoop
     volumes:
       - ./data/datanode1:/hadoop/dfs/data
     environment:
