@@ -7,12 +7,17 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
+      args:
+        TESTING: 'true'
+    environment:
+      - HADOOP_CONF_DIR=/etc/hadoop
     ports:
-      - "443:443" # HTTPS public port
       - "1094:1094" # xrootd public port
       - "3121:3121" # cluster manager, site-internal
     links:
       - io-37-02.acrc.bris.ac.uk
+      - namenode
+      - datanode1
     volumes:
       - type: bind
         source: ./etc/xrootd
@@ -43,15 +48,22 @@ services:
         source: ./.secrets/testing/xrootdse
         target: /.secrets
         read_only: true
-      
+      - type: bind
+        source: ./.secrets/testing/xrootdse/etc/hadoop
+        target: /etc/hadoop
+        read_only: true
+
   io-37-02.acrc.bris.ac.uk:
     hostname: io-37-02.acrc.bris.ac.uk
     image: xrootdse
     build:
       context: .
       dockerfile: ./Dockerfile
+      args:
+        TESTING: 'true'
+    environment:
+      - HADOOP_CONF_DIR=/etc/hadoop
     ports:
-      - "8443:8443" # HTTPS public port
       - "1194:1194" # xrootd public port
     volumes:
       - type: bind
@@ -82,6 +94,13 @@ services:
         source: ./.secrets/testing/xrootdgateway
         target: /.secrets
         read_only: true
+      - type: bind
+        source: ./.secrets/testing/xrootdse/etc/hadoop
+        target: /etc/hadoop
+        read_only: true
+    links:
+     - namenode
+     - datanode1
   xrootdclient:
     hostname: xrootdclient
     image: kreczko/xrootd-testing
@@ -119,3 +138,5 @@ services:
       - ./data/datanode1:/hadoop/dfs/data
     environment:
       - CORE_CONF_fs_defaultFS=hdfs://namenode:8020
+    links:
+      - namenode

@@ -43,7 +43,11 @@ services:
         source: ./.secrets/prod
         target: /.secrets
         read_only: true
-      
+      - type: bind
+        source: ./.secrets/testing/xrootdse/etc/hadoop
+        target: /etc/hadoop
+        read_only: true
+
   io-37-02.acrc.bris.ac.uk:
     hostname: io-37-02.acrc.bris.ac.uk
     image: xrootdse
@@ -81,6 +85,10 @@ services:
       - type: bind
         source: ./.secrets/prod
         target: /.secrets
+        read_only: true
+      - type: bind
+        source: ./.secrets/testing/xrootdgateway/etc/hadoop
+        target: /etc/hadoop
         read_only: true
   xrootdclient:
     hostname: xrootdclient
