@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-mkdir -p /xrootd
+mkdir -p /xrootd /cksums
+chown -R xrootd:xrootd /cksums
 chown -R xrootd:xrootd /xrootd
 
 directories=$(python extract_directories.py)
