@@ -58,9 +58,12 @@ RUN ${TESTING} -eq true || (rm -f /usr/bin/hadoop* \
   && ln -s /opt/cloudera/parcels/CDH/bin/hadoop-0.20 /usr/bin/hadoop-0.20 \
   && ln -s /opt/cloudera/parcels/CDH/bin/hadoop-fuse-dfs /usr/bin/hadoop-fuse-dfs \
   && ln -s /opt/cloudera/parcels/CDH/bin/hdfs /usr/bin/hdfs \
+  && ln -s /opt/cloudera/parcels/CDH/lib64 /usr/lib/hadoop/lib/native \
   && ln -s /etc/hadoop/conf.cloudera.hdfs /etc/alternatives/hadoop-conf)
 RUN ${TESTING} -eq false || rm -fr /etc/hadoop/*
 
 ENV HADOOP_CONF_DIR=/etc/hadoop/conf.cloudera.hdfs
+ENV HADOOP_COMMON_LIB_NATIVE_DIR=/usr/lib/hadoop/lib
+ENV HADOOP_OPTS="-Djava.net.preferIPv4Stack=true -Djava.library.path=/usr/lib/hadoop/lib"
 
 VOLUME /xrootd
