@@ -130,7 +130,7 @@ t readgridppdata  /xrootd/gridpp/       lr
 x gridppprod  writegridppdata readgridppdata
 
 # "/gridpp/Role=lcgadmin"
-= gridppgm o: gridpp g: /gridpp r: /gridpp/Role=lcgadmin
+= gridppsgm o: gridpp g: /gridpp r: /gridpp/Role=lcgadmin
 x gridppsgm writegridppdata readgridppdata
 
 g /gridpp /xrootd/gridpp/user/ a \
@@ -193,7 +193,7 @@ t readopsdata  /xrootd/ops/       lr
 x opsprod  writeopsdata readopsdata
 
 # "/ops/Role=lcgadmin"
-= opsgm o: ops g: /ops r: /ops/Role=lcgadmin
+= opssgm o: ops g: /ops r: /ops/Role=lcgadmin
 x opssgm writeopsdata readopsdata
 
 g /ops /xrootd/ops/user/ a \
