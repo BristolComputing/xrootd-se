@@ -1,9 +1,3 @@
-## The following gives the user named "xrootd" full access to all the files
-## under /xrootd.
-## There must be at least one such user in order to create the
-## private dirs for users willing to store their data in the facility
-u xrootd /xrootd a
-
 ###############################################################################################
 ## PRODUCTION
 ## docs: https://opensciencegrid.org/docs/data/xrootd/xrootd-authorization/#authorization-file
@@ -13,6 +7,11 @@ u xrootd /xrootd a
 ### NOTE: all directories must end with a '/' otherwise regex is used? BAD!!!
 ###############################################################################################
 
+## The following gives the user named "xrootd" full access to all the files
+## under /xrootd.
+## There must be at least one such user in order to create the
+## private dirs for users willing to store their data in the facility
+u xrootd /xrootd/ a
 
 ###############################################################################################
 ### ATLAS
@@ -21,11 +20,14 @@ u xrootd /xrootd a
 t writeatlasdata /xrootd/atlas/       a
 t readatlasdata  /xrootd/atlas/       lr
 
-# "/atlas/Role=production" has full access to managed CMS data and read for CMS
-u atlasprd  writeatlasdata readatlasdata
+# "/atlas/Role=production" has full access to managed ATLAS data and read for ATLAS
 
-# "/atlas/Role=lcgadmin" ???
-u atlassgm writeatlasdata
+= atlasprod o: atlas g: /atlas r: /atlas/Role=production
+x atlasprod  writeatlasdata readatlasdata
+
+# "/atlas/Role=lcgadmin" has full access to managed ATLAS data and read for ATLAS
+= atlassgm o: atlas g: /atlas r: /atlas/Role=lcgadmin
+x atlassgm writeatlasdata
 
 
 ###############################################################################################
@@ -52,10 +54,12 @@ t writecmsdata /xrootd/cms/store/backfill/       a \
 t readcmsdata  /xrootd/cms/store/                lr
 
 # "/cms/Role=production" has full access to managed CMS data and read for CMS
-u cmsprd  writecmsdata readcmsdata
+= cmsprod o: cms g: /cms r: /cms/Role=production
+x cmsprod  writecmsdata readcmsdata
 
 # "/cms/Role=lcgadmin" can write into /store/user/sam and /store/unmerged/SAM.
-u cmssgm /xrootd/cms/store/user/sam/ a \
+= cmssgm o: cms g: /cms r: /cms/Role=lcgadmin
+x cmssgm /xrootd/cms/store/user/sam/ a \
            /xrootd/cms/store/unmerged/SAM/ a \
            readcmsdata
 
@@ -79,11 +83,13 @@ g /cms /xrootd/cms/store/user/ a \
 t writedteamdata /xrootd/dteam/       a
 t readdteamdata  /xrootd/dteam/       lr
 
-# "/dteam/Role=production" has full access to managed CMS data and read for CMS
-u dteamprd  writedteamdata readdteamdata
+# "/dteam/Role=production" has full access to managed dteam data and read for dteam
+= dteamprod o: dteam g: /dteam r: /dteam/Role=production
+x dteamprod  writedteamdata readdteamdata
 
 # "/dteam/Role=lcgadmin"
-u dteamsgm writedteamdata
+= dteamsgm o: dteam g: /dteam r: /dteam/Role=lcgadmin
+x dteamsgm writedteamdata
 
 g /dteam /xrootd/dteam/user/ a \
          /xrootd/dteam/temp/ a \
@@ -99,12 +105,13 @@ t writedunedata /xrootd/dune/      a \
 
 t readdunedata /xrootd/dune/      lr
 
-# "/dune/Role=production" has full access to managed CMS data and read for CMS
-u duneprod  writedunedata readdunedata
+# "/dune/Role=production" has full access to managed DUNE data and read for DUNE
+= duneprod o: dune g: /dune r: /dune/Role=production
+x duneprod  writedunedata readdunedata
 
 # no entry in grid-mapfile
 = dunesgm o: dune g: /dune r: /dune/Role=lcgadmin
-# "/dune/Role=lcgadmin" ???
+# "/dune/Role=lcgadmin"
 x dunesgm writedunedata readdunedata
 
 g /dune /xrootd/dune/user/ a \
@@ -118,11 +125,13 @@ g /dune /xrootd/dune/user/ a \
 t writegridppdata /xrootd/gridpp/       a
 t readgridppdata  /xrootd/gridpp/       lr
 
-# "/gridpp/Role=production" has full access to managed CMS data and read for CMS
-u gridppprd  writegridppdata readgridppdata
+# "/gridpp/Role=production" has full access to GridPP data and read for GridPP
+= gridppprod o: gridpp g: /gridpp r: /gridpp/Role=production
+x gridppprod  writegridppdata readgridppdata
 
 # "/gridpp/Role=lcgadmin"
-u gridppsgm writegridppdata readgridppdata
+= gridppgm o: gridpp g: /gridpp r: /gridpp/Role=lcgadmin
+x gridppsgm writegridppdata readgridppdata
 
 g /gridpp /xrootd/gridpp/user/ a \
           /xrootd/gridpp/temp/ a \
@@ -138,12 +147,13 @@ t writelzdata /xrootd/lz/data/     a \
 
 t readlzdata /xrootd/lz/      lr
 
-# "/lz/Role=production" has full access to managed CMS data and read for CMS
-u lzprod writelzdata readlzdata
+# "/lz/Role=production" has full access to managed LZ data and read for LZ
+= lzprod o: lz g: /lz r: /lz/Role=production
+x lzprod writelzdata readlzdata
 
 # no entry in grid-mapfile
 = lzsgm o: lz g: /lz r: /lz/Role=lcgadmin
-# "/lz/Role=lcgadmin" ???
+# "/lz/Role=lcgadmin"
 x lzsgm writelzdata readlzdata
 
 g /lz /xrootd/lz/user/ a \
@@ -158,12 +168,13 @@ t writemu3edata /xrootd/mu3e/     a
 
 t readmu3edata /xrootd/mu3e/      lr
 
-# "/mu3e/Role=production" has full access to managed CMS data and read for CMS
-u mu3eprod  writemu3edata readmu3edata
+# "/mu3e/Role=production" has full access to managed MU3E data and read for MU3E
+= mu3eprod o: mu3e g: /mu3e r: /mu3e.org/Role=production
+x mu3eprod  writemu3edata readmu3edata
 
 # no entry in grid-mapfile
-= mu3esgm o: mu3e g: /mu3e r: /mu3e/Role=lcgadmin
-# "/mu3e/Role=lcgadmin" ???
+= mu3esgm o: mu3e g: /mu3e r: /mu3e.org/Role=lcgadmin
+# "/mu3e/Role=lcgadmin"
 x mu3esgm writemu3edata readmu3edata
 
 g /mu3e /xrootd/mu3e/user/ a \
@@ -177,11 +188,13 @@ g /mu3e /xrootd/mu3e/user/ a \
 t writeopsdata /xrootd/ops/       a
 t readopsdata  /xrootd/ops/       lr
 
-# "/ops/Role=production" has full access to managed CMS data and read for CMS
-u opsprd  writeopsdata readopsdata
+# "/ops/Role=production" has full access to managed OPS data and read for OPS
+= opsprod o: ops g: /ops r: /ops/Role=production
+x opsprod  writeopsdata readopsdata
 
 # "/ops/Role=lcgadmin"
-u opssgm writeopsdata readopsdata
+= opsgm o: ops g: /ops r: /ops/Role=lcgadmin
+x opssgm writeopsdata readopsdata
 
 g /ops /xrootd/ops/user/ a \
        /xrootd/ops/temp/ a \
