@@ -1,3 +1,6 @@
 [submodule "tests/http-tpc-utils"]
 	path = tests/http-tpc-utils
 	url = https://github.com/paulmillar/http-tpc-utils.git
+[submodule "external/xrootd-hdfs"]
+	path = external/xrootd-hdfs
+	url = git@github.com:uobdic/xrootd-hdfs.git
