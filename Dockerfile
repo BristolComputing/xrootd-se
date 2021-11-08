@@ -63,7 +63,8 @@ RUN ${TESTING} -eq true || (rm -f /usr/bin/hadoop* \
 RUN ${TESTING} -eq false || rm -fr /etc/hadoop/*
 
 ENV HADOOP_CONF_DIR=/etc/hadoop/conf.cloudera.hdfs
-ENV HADOOP_COMMON_LIB_NATIVE_DIR=/usr/lib/hadoop/lib
-ENV HADOOP_OPTS="-Djava.net.preferIPv4Stack=true -Djava.library.path=/usr/lib/hadoop/lib"
+ENV HADOOP_COMMON_LIB_NATIVE_DIR=/usr/lib/hadoop/lib/native
+ENV HADOOP_OPTS="-Djava.net.preferIPv4Stack=true -Djava.library.path=/usr/lib/hadoop/lib/native"
+ENV LD_LIBRARY_PATH=/usr/lib/hadoop/lib/native
 
 VOLUME /xrootd
