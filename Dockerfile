@@ -1,6 +1,12 @@
-ARG BASE_YUM_REPO=release
+FROM kreczko/xrootd-hdfs-build
 
-FROM opensciencegrid/software-base:3.5-el7-$BASE_YUM_REPO
+RUN mkdir -p /tmp/build
+WORKDIR /tmp
+RUN git clone -b kreczko-hdfs3-debug --single-branch https://github.com/uobdic/xrootd-hdfs.git
+WORKDIR /tmp/build
+RUN scl enable devtoolset-8 "cmake3 /tmp/xrootd-hdfs; make"
+
+FROM opensciencegrid/software-base:3.5-el7-release
 
 LABEL maintainer Bristol Site Admins <lcg-admin@bristol.ac.uk>
 
@@ -13,7 +19,7 @@ RUN yum update -y && \
 ARG XROOTD_GID=1000
 ARG XROOTD_UID=1000
 
-RUN groupadd -o -g ${XROOTD_GID}  xrootd
+RUN groupadd -o -g ${XROOTD_GID} xrootd
 RUN useradd -o -u ${XROOTD_UID} -g ${XROOTD_GID} -s /bin/sh xrootd
 
 # hadoop-*, (xrootd-hdfs dependency) in OSG is badly packed, hadoop-* pulls X11, cups, etc.
@@ -22,7 +28,6 @@ RUN yum install -q -y \
     java-1.8.0-openjdk-headless \
     xrootd \
     xrootd-client \
-    xrootd-hdfs \
     xrootd-lcmaps \
     xrootd-scitokens \
     xrootd-selinux \
@@ -58,13 +63,15 @@ RUN ${TESTING} -eq true || (rm -f /usr/bin/hadoop* \
   && ln -s /opt/cloudera/parcels/CDH/bin/hadoop-0.20 /usr/bin/hadoop-0.20 \
   && ln -s /opt/cloudera/parcels/CDH/bin/hadoop-fuse-dfs /usr/bin/hadoop-fuse-dfs \
   && ln -s /opt/cloudera/parcels/CDH/bin/hdfs /usr/bin/hdfs \
-  && ln -s /opt/cloudera/parcels/CDH/lib64 /usr/lib/hadoop/lib/native \
   && ln -s /etc/hadoop/conf.cloudera.hdfs /etc/alternatives/hadoop-conf)
 RUN ${TESTING} -eq false || rm -fr /etc/hadoop/*
 
 ENV HADOOP_CONF_DIR=/etc/hadoop/conf.cloudera.hdfs
-ENV HADOOP_COMMON_LIB_NATIVE_DIR=/opt/cloudera/parcels/CDH/lib64
-ENV HADOOP_OPTS="-Djava.net.preferIPv4Stack=true -Djava.library.path=/opt/cloudera/parcels/CDH/lib64"
-ENV LD_LIBRARY_PATH=/opt/cloudera/parcels/CDH/lib64
+ENV LD_LIBRARY_PATH=/opt/hadoop/lib/native:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.302.b08-0.el7_9.x86_64/jre/lib/amd64/serv
+
+RUN rm -f /usr/lib64/libXrdHdfs*
+COPY --from=0 /opt/hadoop /opt/hadoop
+COPY --from=0 /tmp/build/libXrdHdfs-5.so /usr/lib64
+COPY --from=0 /tmp/build/libXrdHdfsReal-5.so /usr/lib64
 
 VOLUME /xrootd
