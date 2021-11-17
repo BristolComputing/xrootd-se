@@ -1,5 +1,5 @@
 FROM kreczko/xrootd-hdfs-build
-ARG XROOTD_HDFS_COMMIT_HASH=7de15c8
+ARG XROOTD_HDFS_COMMIT_HASH=806c171
 
 RUN mkdir -p /tmp/build
 WORKDIR /tmp
