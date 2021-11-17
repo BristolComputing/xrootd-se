@@ -10,6 +10,12 @@ FROM opensciencegrid/software-base:3.5-el7-release
 
 LABEL maintainer Bristol Site Admins <lcg-admin@bristol.ac.uk>
 
+RUN rm -f /usr/lib64/libXrdHdfs* && mkdir -p  /usr/libexec/xrootd-hdfs
+COPY --from=0 /opt/hadoop /opt/hadoop
+COPY --from=0 /tmp/build/libXrdHdfs-5.so /usr/lib64
+COPY --from=0 /tmp/build/libXrdHdfsReal-5.so /usr/lib64
+COPY --from=0 /tmp/build/xrootd_hdfs_envcheck /usr/libexec/xrootd-hdfs
+
 RUN yum update -y && \
   yum clean all && \
   rm -rf /var/cache/yum/*
@@ -66,11 +72,5 @@ ENV PATH=/opt/hadoop/bin:$PATH
 ENV HADOOP_CONF_DIR=/etc/hadoop/conf.cloudera.hdfs
 ENV JAVA_HOME=/etc/alternatives/jre
 ENV LD_LIBRARY_PATH=/opt/hadoop/lib/native:/etc/alternatives/jre/lib/amd64/server
-
-RUN rm -f /usr/lib64/libXrdHdfs* && mkdir -p  /usr/libexec/xrootd-hdfs
-COPY --from=0 /opt/hadoop /opt/hadoop
-COPY --from=0 /tmp/build/libXrdHdfs-5.so /usr/lib64
-COPY --from=0 /tmp/build/libXrdHdfsReal-5.so /usr/lib64
-COPY --from=0 /tmp/build/xrootd_hdfs_envcheck /usr/libexec/xrootd-hdfs
 
 VOLUME /xrootd
