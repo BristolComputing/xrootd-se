@@ -71,10 +71,11 @@ RUN ${TESTING} -eq false || rm -fr /etc/hadoop/*
 ENV PATH=/opt/hadoop/bin:$PATH
 ENV HADOOP_CONF_DIR=/etc/hadoop/conf.cloudera.hdfs
 ENV HADOOP_HOME=/opt/hadoop
-ENV HADOOP_SHARE_COMMON=${HADOOP_HOME}/share/hadoop/common
-ENV HADOOP_SHARE_LIB_DIR=${HADOOP_SHARE_COMMON}/lib
+ENV HADOOP_LIB_DIR=/opt/hadoop/lib
+ENV HADOOP_LIBEXEC_DIR=/opt/hadoop/libexec
+
 ENV JAVA_HOME=/etc/alternatives/jre
 ENV LD_LIBRARY_PATH=/opt/hadoop/lib/native:/etc/alternatives/jre/lib/amd64/server
-ENV CLASSPATH=./:${HADOOP_SHARE_LIB_DIR}/*.jar:${HADOOP_SHARE_COMMON}/*.jar:${HADOOP_HOME}/share/hadoop/hdfs/*.jar:{HADOOP_HOME}/share/hadoop/hdfs/lib/*.jar:{HADOOP_HOME}/share/hadoop/tools/lib/*.jar:/etc/hadoop/conf:${HADOOP_CONF_DIR}
+ENV CLASSPATH=/etc/hadoop/conf.cloudera.hdfs:/opt/hadoop/share/hadoop/client/*:/opt/hadoop/share/hadoop/common/lib/*:/opt/hadoop/share/hadoop/common/*:/opt/hadoop/share/hadoop/hdfs:/opt/hadoop/share/hadoop/hdfs/lib/*:/opt/hadoop/share/hadoop/hdfs/*:/opt/hadoop/share/hadoop/mapreduce/*:/opt/hadoop/share/hadoop/yarn:/opt/hadoop/share/hadoop/yarn/lib/*:/opt/hadoop/share/hadoop/yarn/*
 
 VOLUME /xrootd
