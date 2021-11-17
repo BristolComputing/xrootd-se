@@ -1,8 +1,11 @@
 FROM kreczko/xrootd-hdfs-build
+ARG XROOTD_HDFS_COMMIT_HASH=7de15c8
 
 RUN mkdir -p /tmp/build
 WORKDIR /tmp
-RUN git clone -b kreczko-hdfs3-debug --single-branch https://github.com/uobdic/xrootd-hdfs.git
+RUN git clone -b kreczko-hdfs3-debug --single-branch https://github.com/uobdic/xrootd-hdfs.git \
+ && cd xrootd-hdfs \
+ && git checkout $XROOTD_HDFS_COMMIT_HASH
 WORKDIR /tmp/build
 RUN scl enable devtoolset-8 "cmake3 /tmp/xrootd-hdfs; make"
 
