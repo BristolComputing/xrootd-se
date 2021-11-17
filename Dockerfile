@@ -59,11 +59,10 @@ ARG TESTING=false
 RUN ${TESTING} -eq true || (rm -f /usr/bin/hadoop* \
   && rm -f /usr/bin/hdfs* \
   && rm -f /etc/alternatives/hadoop-conf \
-  && ln -s /opt/hadoop/bin/hadoop /usr/bin/hadoop \
-  && ln -s /opt/hadoop/bin/hdfs /usr/bin/hdfs \
   && ln -s /etc/hadoop/conf.cloudera.hdfs /etc/alternatives/hadoop-conf)
 RUN ${TESTING} -eq false || rm -fr /etc/hadoop/*
 
+ENV PATH=/opt/hadoop/bin:$PATH
 ENV HADOOP_CONF_DIR=/etc/hadoop/conf.cloudera.hdfs
 ENV JAVA_HOME=/etc/alternatives/jre
 ENV LD_LIBRARY_PATH=/opt/hadoop/lib/native:/etc/alternatives/jre/lib/amd64/server
