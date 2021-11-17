@@ -59,10 +59,8 @@ ARG TESTING=false
 RUN ${TESTING} -eq true || (rm -f /usr/bin/hadoop* \
   && rm -f /usr/bin/hdfs* \
   && rm -f /etc/alternatives/hadoop-conf \
-  && ln -s /opt/cloudera/parcels/CDH/bin/hadoop /usr/bin/hadoop \
-  && ln -s /opt/cloudera/parcels/CDH/bin/hadoop-0.20 /usr/bin/hadoop-0.20 \
-  && ln -s /opt/cloudera/parcels/CDH/bin/hadoop-fuse-dfs /usr/bin/hadoop-fuse-dfs \
-  && ln -s /opt/cloudera/parcels/CDH/bin/hdfs /usr/bin/hdfs \
+  && ln -s /opt/hadoop/bin/hadoop /usr/bin/hadoop \
+  && ln -s /opt/hadoop/bin/hdfs /usr/bin/hdfs \
   && ln -s /etc/hadoop/conf.cloudera.hdfs /etc/alternatives/hadoop-conf)
 RUN ${TESTING} -eq false || rm -fr /etc/hadoop/*
 
