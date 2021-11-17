@@ -65,11 +65,13 @@ RUN ${TESTING} -eq true || (rm -f /usr/bin/hadoop* \
 RUN ${TESTING} -eq false || rm -fr /etc/hadoop/*
 
 ENV HADOOP_CONF_DIR=/etc/hadoop/conf.cloudera.hdfs
+ENV JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.312.b07-1.el7_9.x86_64/jre
 ENV LD_LIBRARY_PATH=/opt/hadoop/lib/native:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.302.b08-0.el7_9.x86_64/jre/lib/amd64/serv
 
-RUN rm -f /usr/lib64/libXrdHdfs*
+RUN rm -f /usr/lib64/libXrdHdfs* && mkdir -p  /usr/libexec/xrootd-hdfs
 COPY --from=0 /opt/hadoop /opt/hadoop
 COPY --from=0 /tmp/build/libXrdHdfs-5.so /usr/lib64
 COPY --from=0 /tmp/build/libXrdHdfsReal-5.so /usr/lib64
+COPY --from=0 /tmp/build/xrootd_hdfs_envcheck /usr/libexec/xrootd-hdfs
 
 VOLUME /xrootd
