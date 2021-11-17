@@ -111,12 +111,12 @@ chown -R xrootd:xrootd .secrets/prod/etc/xrootd/macaroon-secret
 
 # building container
 # adjust storage superuser in container to match host via XROOTD_GID and XROOTD_UID:
-docker build -t xrootdse:$tag \
+docker build -t kreczko/xrootdse:$tag \
  --build-arg XROOTD_GID=974 \
  --build-arg XROOTD_UID=977 \
  .
 # service uses the `latest` tag, so we need to create a 2nd tag here
-docker tag xrootdse:$tag xrootdse:latest
+docker tag kreczko/xrootdse:$tag kreczko/xrootdse:latest
 # TBD: Maybe we should have an easy way to set the tag via `Environment` in the systemctl unit
 ```
 
