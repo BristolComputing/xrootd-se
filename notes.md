@@ -8,6 +8,7 @@
 - https://github.com/xrootd/xrootd/issues/1268
 - https://gridpp-storage.blogspot.com/2019/10/modern-account-mapping-for-cephxrootd.html
 - https://twiki.cern.ch/twiki/bin/view/CMSPublic/XRootDoverHTTP
+- https://twiki.cern.ch/twiki/bin/view/CMSPublic/HDFSXRootDInstall
 - https://towardsdatascience.com/hdfs-simple-docker-installation-guide-for-data-science-workflow-b3ca764fc94b
 - https://www.digitalocean.com/community/tutorials/how-to-use-systemctl-to-manage-systemd-services-and-units
 - https://github.com/paulmillar/http-tpc-utils.git
