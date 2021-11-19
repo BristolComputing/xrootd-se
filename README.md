@@ -1,12 +1,15 @@
-# xrootd-se
-XrootD SE deployment
+# xrootd storage element
+
+This repository provides the necessary Docker images and config files to
+run an xrootd storage element in either standalone (1 node) or clustered (1 redirector + N servers).
+Configuration examples are provided for HDFS and POSIX storage backends, but the Docker images are built with HDFS dependencies (Java, xrootd-hdfs, hadoop client).
 
 
 ## Prerequisites
 
 ### storage super-user
 
-The storage system, e.g. HDFS, needs to know the `xrootd` user which should have the same UID
+The storage system, e.g. HDFS, needs to know the `xrootd` user which should have the same UID across the cluster
 
 ### Docker
 
@@ -38,23 +41,12 @@ gpgcheck=0
 
 or configure with puppet
 
-### Docker-compose
-
-From https://docs.docker.com/compose/install/:
-
-```
-bash
-sudo curl -L \
-"https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" \
--o /usr/local/bin/docker-compose
-
-sudo chmod +x /usr/local/bin/docker-compose
-```
 ### CVMFS
 
---> Configure with Puppet
+Configure with Puppet or your favourite management system.
+Alternatively, check out [manual instructions](https://cvmfs.readthedocs.io/en/stable/cpt-quickstart.html).
 
-Then
+Since we've observed interactions between Docker and CVMFS where `autofs` is not doing its job, we typically disable `autofs` and add the relevant CVMFS repositories to `/etc/fstab`:
 
 ```bash
 systemctl stop autofs.service
@@ -64,9 +56,19 @@ echo "grid.cern.ch    /cvmfs/grid.cern.ch     cvmfs defaults 0 0" >> /etc/fstab
 mount /cvmfs/grid.cern.ch
 ```
 
+`/cvmfs/grid.cern.ch` will be used for
+ - `/cvmfs/grid.cern.ch/certificates` (allows us to drop fetch-crl)
+ - `/cvmfs/grid.cern.ch/vomses` (no-worry, automatic VO server updates)
+ - `/etc/grid-security/vomsdir` (similar to above)
+
 ### Directory structure (first-time-only)
 
-Any folder referenced in etc/xrootd/Authfile needs to be created first
+Any folder referenced in etc/xrootd/Authfile needs to be created first.
+Two scripts are provided for that purpoise:
+ - `etc/xrootd/initial_setup_hdfs.sh` for HDFS
+ - `etc/xrootd/initial_setup_posix.sh` for POSIX
+
+All created directories will be owned by `xrootd:xrootd`.
 
 ### IP forwarding
 
@@ -86,7 +88,9 @@ sysctl -p /etc/sysctl.d/99-ip_forwaring.conf
 ```
 ## Production
 
-### xrootd manager
+For production we use `systemctl` to start/stop our containers.
+
+### xrootd manager/redirector
 
 #### Step 1: Download and prepare files and container
 
@@ -112,13 +116,18 @@ chown -R xrootd:xrootd .secrets/prod/etc/xrootd/macaroon-secret
 # building container
 # adjust storage superuser in container to match host via XROOTD_GID and XROOTD_UID:
 docker build -t kreczko/xrootdse:$tag \
- --build-arg XROOTD_GID=974 \
- --build-arg XROOTD_UID=977 \
+ --build-arg XROOTD_GID=1094 \
+ --build-arg XROOTD_UID=1094 \
  .
 # service uses the `latest` tag, so we need to create a 2nd tag here
 docker tag kreczko/xrootdse:$tag kreczko/xrootdse:latest
 # TBD: Maybe we should have an easy way to set the tag via `Environment` in the systemctl unit
 ```
+
+Make sure that `XROOTD_GID` and `XROOTD_UID` correspond to the `gid` and `uid` of the `xrootd` user on the cluster.
+
+Alternatively, instead of building the image yourself, you can use the tagged images from https://hub.docker.com/repository/docker/kreczko/xrootdse
+Remember to change the version in `/etc/systemd/system/docker.xrootdse.service`.
 
 #### Step 2: Set up systemctl unit
 
@@ -143,6 +152,7 @@ Same as Step 1 for the xrootd manager (see above).
 cp -p optional/etc/xrootd/config.d/*hdfs*.cfg etc/xrootd/config.d/.
 # for POSIX (e.g. testing)
 cp -p optional/etc/xrootd/config.d/*posix*.cfg etc/xrootd/config.d/.
+```
 
 #### Step 2: Set up systemctl unit
 
@@ -188,3 +198,25 @@ systemctl daemon-reload
 - Reload services (e.g. changed config):
   - manager: `systemctl reload docker.xrootdse`
   - gateway: `systemctl reload docker.xrootdse`
+
+### Logs
+
+Logs for the xrootd roles will be available on the host under
+ - `/var/log/xrootd/clustered/cmsd.log`
+ - `/var/log/xrootd/clustered/xrootd.log`
+
+for the clustered version and in `/var/log/xrootd/clustered/standalone` for the standalone version.
+
+## For development
+### Docker-compose
+
+From https://docs.docker.com/compose/install/:
+
+```
+bash
+sudo curl -L \
+"https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" \
+-o /usr/local/bin/docker-compose
+
+sudo chmod +x /usr/local/bin/docker-compose
+```
