@@ -9,7 +9,7 @@ RUN git clone -b kreczko-hdfs3-debug --single-branch https://github.com/uobdic/x
 WORKDIR /tmp/build
 RUN scl enable devtoolset-8 "cmake3 /tmp/xrootd-hdfs; make"
 
-FROM opensciencegrid/software-base:3.5-el7-release
+FROM centos:7
 
 LABEL maintainer Bristol Site Admins <lcg-admin@bristol.ac.uk>
 
@@ -32,7 +32,9 @@ RUN groupadd -o -g ${XROOTD_GID} xrootd
 RUN useradd -o -u ${XROOTD_UID} -g ${XROOTD_GID} -s /bin/sh xrootd
 
 # hadoop-*, (xrootd-hdfs dependency) in OSG is badly packed, hadoop-* pulls X11, cups, etc.
-RUN yum install -q -y \
+RUN yum update -y -q \
+  && yum install -y epel-release \
+  && yum install -q -y \
     iproute \
     java-1.8.0-openjdk-headless \
     xrootd \
