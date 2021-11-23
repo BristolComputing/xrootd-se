@@ -122,6 +122,14 @@ docker build -t kreczko/xrootdse:$tag \
 # service uses the `latest` tag, so we need to create a 2nd tag here
 docker tag kreczko/xrootdse:$tag kreczko/xrootdse:latest
 # TBD: Maybe we should have an easy way to set the tag via `Environment` in the systemctl unit
+
+# host folders and user
+# user, manual or via puppet (use same XROOTD_UID and XROOTD_GID as for the container build)
+groupadd -o -g ${XROOTD_GID} xrootd
+useradd -o -u ${XROOTD_UID} -g ${XROOTD_GID} -s /bin/sh xrootd
+
+mkdir -p /var/run/xrootd /var/log/xrootd
+chown xrootd:xrootd /var/run/xrootd /var/log/xrootd
 ```
 
 Make sure that `XROOTD_GID` and `XROOTD_UID` correspond to the `gid` and `uid` of the `xrootd` user on the cluster.
