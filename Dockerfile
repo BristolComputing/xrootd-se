@@ -86,6 +86,10 @@ ENV JAVA_HOME=/etc/alternatives/jre
 ENV LD_LIBRARY_PATH=/opt/hadoop/lib/native:/etc/alternatives/jre/lib/amd64/server
 ENV CLASSPATH=/etc/hadoop/conf.cloudera.hdfs:/opt/hadoop/share/hadoop/client/*:/opt/hadoop/share/hadoop/common/lib/*:/opt/hadoop/share/hadoop/common/*:/opt/hadoop/share/hadoop/hdfs:/opt/hadoop/share/hadoop/hdfs/lib/*:/opt/hadoop/share/hadoop/hdfs/*:/opt/hadoop/share/hadoop/mapreduce/*:/opt/hadoop/share/hadoop/yarn:/opt/hadoop/share/hadoop/yarn/lib/*:/opt/hadoop/share/hadoop/yarn/*
 
+# xrootd folder fixes
+RUN mkdir -p /var/run/xrootd /var/spool/xrootd \
+  && chown xrootd:xrootd /var/run/xrootd /var/spool/xrootd
+
 VOLUME /xrootd
 
 COPY etc/supervisord.conf /etc/supervisord.conf
