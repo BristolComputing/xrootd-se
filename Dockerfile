@@ -24,19 +24,22 @@ RUN yum update -y && \
   rm -rf /var/cache/yum/*
 
 # Create the xrootd user with a fixed GID/UID
-# OSG default ID 10940 but we want 1000
-ARG XROOTD_GID=1000
-ARG XROOTD_UID=1000
+# OSG default ID 10940 but we want 1094 (or 1000 for testing)
+ARG XROOTD_GID=1094
+ARG XROOTD_UID=1094
 
 RUN groupadd -o -g ${XROOTD_GID} xrootd
 RUN useradd -o -u ${XROOTD_UID} -g ${XROOTD_GID} -s /bin/sh xrootd
 
-# hadoop-*, (xrootd-hdfs dependency) in OSG is badly packed, hadoop-* pulls X11, cups, etc.
 RUN yum update -y -q \
   && yum install -y epel-release \
   && yum install -q -y \
+    cronie \
     iproute \
     java-1.8.0-openjdk-headless \
+    less \
+    supervisor \
+    which \
     xrootd \
     xrootd-client \
     xrootd-lcmaps \
@@ -84,3 +87,6 @@ ENV LD_LIBRARY_PATH=/opt/hadoop/lib/native:/etc/alternatives/jre/lib/amd64/serve
 ENV CLASSPATH=/etc/hadoop/conf.cloudera.hdfs:/opt/hadoop/share/hadoop/client/*:/opt/hadoop/share/hadoop/common/lib/*:/opt/hadoop/share/hadoop/common/*:/opt/hadoop/share/hadoop/hdfs:/opt/hadoop/share/hadoop/hdfs/lib/*:/opt/hadoop/share/hadoop/hdfs/*:/opt/hadoop/share/hadoop/mapreduce/*:/opt/hadoop/share/hadoop/yarn:/opt/hadoop/share/hadoop/yarn/lib/*:/opt/hadoop/share/hadoop/yarn/*
 
 VOLUME /xrootd
+
+COPY etc/supervisord.conf /etc/supervisord.conf
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
