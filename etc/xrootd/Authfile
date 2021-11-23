@@ -14,6 +14,22 @@
 u xrootd /xrootd/ a
 
 ###############################################################################################
+### alice
+###############################################################################################
+# Topics to summarize permissions
+t writealicedata /xrootd/alice/       a
+t readalicedata  /xrootd/alice/       lr
+
+# "/alice/Role=production" has full access to managed alice data and read for alice
+
+= aliceprod o: alice g: /alice r: /alice/Role=production
+x aliceprod  writealicedata readalicedata
+
+# "/alice/Role=lcgadmin" has full access to managed alice data and read for alice
+= alicesgm o: alice g: /alice r: /alice/Role=lcgadmin
+x alicesgm writealicedata
+
+###############################################################################################
 ### ATLAS
 ###############################################################################################
 # Topics to summarize permissions
@@ -137,6 +153,46 @@ g /gridpp /xrootd/gridpp/user/ a \
           /xrootd/gridpp/temp/ a \
           readgridppdata
 
+
+###############################################################################################
+### ilc
+###############################################################################################
+# Topics to summarize permissions
+t writeilcdata /xrootd/ilc/       a
+t readilcdata  /xrootd/ilc/       lr
+
+# "/ilc/Role=production" has full access to ilc data and read for ilc
+= ilcprod o: ilc g: /ilc r: /ilc/Role=production
+x ilcprod  writeilcdata readilcdata
+
+# "/ilc/Role=lcgadmin"
+= ilcsgm o: ilc g: /ilc r: /ilc/Role=lcgadmin
+x ilcsgm writeilcdata readilcdata
+
+g /ilc /xrootd/ilc/user/ a \
+          /xrootd/ilc/temp/ a \
+          readilcdata
+
+###############################################################################################
+### LSST
+###############################################################################################
+# Topics to summarize permissions
+t writelsstdata /xrootd/lsst/       a
+t readlsstdata  /xrootd/lsst/       lr
+
+# "/lsst/Role=production" has full access to lsst data and read for lsst
+= lsstprod o: lsst g: /lsst r: /lsst/Role=production
+x lsstprod  writelsstdata readlsstdata
+
+# "/lsst/Role=lcgadmin"
+= lsstsgm o: lsst g: /lsst r: /lsst/Role=lcgadmin
+x lsstsgm writelsstdata readlsstdata
+
+g /lsst /xrootd/lsst/user/ a \
+          /xrootd/lsst/temp/ a \
+          readlsstdata
+
+
 ###############################################################################################
 ### LUX-Zeplin
 ###############################################################################################
@@ -182,7 +238,7 @@ g /mu3e /xrootd/mu3e/user/ a \
         readmu3edata
 
 ###############################################################################################
-### OPS
+### ops
 ###############################################################################################
 # Topics to summarize permissions
 t writeopsdata /xrootd/ops/       a
@@ -199,3 +255,22 @@ x opssgm writeopsdata readopsdata
 g /ops /xrootd/ops/user/ a \
        /xrootd/ops/temp/ a \
        readopsdata
+
+###############################################################################################
+### wlcg
+###############################################################################################
+# Topics to summarize permissions
+t writewlcgdata /xrootd/wlcg/       a
+t readwlcgdata  /xrootd/wlcg/       lr
+
+# "/wlcg/Role=production" has full access to managed wlcg data and read for wlcg
+= wlcgprod o: wlcg g: /wlcg r: /wlcg/Role=production
+x wlcgprod  writewlcgdata readwlcgdata
+
+# "/wlcg/Role=lcgadmin"
+= wlcgsgm o: wlcg g: /wlcg r: /wlcg/Role=lcgadmin
+x wlcgsgm writewlcgdata readwlcgdata
+
+g /wlcg /xrootd/wlcg/user/ a \
+       /xrootd/wlcg/temp/ a \
+       readwlcgdata
