@@ -22,11 +22,11 @@ t readalicedata  /xrootd/alice/       lr
 
 # "/alice/Role=production" has full access to managed alice data and read for alice
 
-= aliceprod o: alice g: /alice r: /alice/Role=production
+= aliceprod o: alice g: /alice r: production
 x aliceprod  writealicedata readalicedata
 
 # "/alice/Role=lcgadmin" has full access to managed alice data and read for alice
-= alicesgm o: alice g: /alice r: /alice/Role=lcgadmin
+= alicesgm o: alice g: /alice r: lcgadmin
 x alicesgm writealicedata
 
 ###############################################################################################
@@ -38,11 +38,11 @@ t readatlasdata  /xrootd/atlas/       lr
 
 # "/atlas/Role=production" has full access to managed ATLAS data and read for ATLAS
 
-= atlasprod o: atlas g: /atlas r: /atlas/Role=production
+= atlasprod o: atlas g: /atlas r: production
 x atlasprod  writeatlasdata readatlasdata
 
 # "/atlas/Role=lcgadmin" has full access to managed ATLAS data and read for ATLAS
-= atlassgm o: atlas g: /atlas r: /atlas/Role=lcgadmin
+= atlassgm o: atlas g: /atlas r: lcgadmin
 x atlassgm writeatlasdata
 
 
@@ -70,14 +70,14 @@ t writecmsdata /xrootd/cms/store/backfill/       a \
 t readcmsdata  /xrootd/cms/store/                lr
 
 # "/cms/Role=production" has full access to managed CMS data and read for CMS
-= cmsprod o: cms g: /cms r: /cms/Role=production
+= cmsprod o: cms g: /cms r: production
 x cmsprod  writecmsdata readcmsdata
 
 # "/cms/Role=lcgadmin" can write into /store/user/sam and /store/unmerged/SAM.
-= cmssgm o: cms g: /cms r: /cms/Role=lcgadmin
+= cmssgm o: cms g: /cms r: lcgadmin
 x cmssgm /xrootd/cms/store/user/sam/ a \
-           /xrootd/cms/store/unmerged/SAM/ a \
-           readcmsdata
+         /xrootd/cms/store/unmerged/SAM/ a \
+         readcmsdata
 
 # CMS users have full access to their own directory and temp, and read for CMS
 # While xrootd allows the user to *attempt* any operation - even in other user's
@@ -100,11 +100,11 @@ t writedteamdata /xrootd/dteam/       a
 t readdteamdata  /xrootd/dteam/       lr
 
 # "/dteam/Role=production" has full access to managed dteam data and read for dteam
-= dteamprod o: dteam g: /dteam r: /dteam/Role=production
+= dteamprod o: dteam g: /dteam r: production
 x dteamprod  writedteamdata readdteamdata
 
 # "/dteam/Role=lcgadmin"
-= dteamsgm o: dteam g: /dteam r: /dteam/Role=lcgadmin
+= dteamsgm o: dteam g: /dteam r: lcgadmin
 x dteamsgm writedteamdata
 
 g /dteam /xrootd/dteam/user/ a \
@@ -122,11 +122,11 @@ t writedunedata /xrootd/dune/      a \
 t readdunedata /xrootd/dune/      lr
 
 # "/dune/Role=production" has full access to managed DUNE data and read for DUNE
-= duneprod o: dune g: /dune r: /dune/Role=production
+= duneprod o: dune g: /dune r: production
 x duneprod  writedunedata readdunedata
 
 # no entry in grid-mapfile
-= dunesgm o: dune g: /dune r: /dune/Role=lcgadmin
+= dunesgm o: dune g: /dune r: lcgadmin
 # "/dune/Role=lcgadmin"
 x dunesgm writedunedata readdunedata
 
@@ -142,11 +142,11 @@ t writegridppdata /xrootd/gridpp/       a
 t readgridppdata  /xrootd/gridpp/       lr
 
 # "/gridpp/Role=production" has full access to GridPP data and read for GridPP
-= gridppprod o: gridpp g: /gridpp r: /gridpp/Role=production
+= gridppprod o: gridpp g: /gridpp r: production
 x gridppprod  writegridppdata readgridppdata
 
 # "/gridpp/Role=lcgadmin"
-= gridppsgm o: gridpp g: /gridpp r: /gridpp/Role=lcgadmin
+= gridppsgm o: gridpp g: /gridpp r: lcgadmin
 x gridppsgm writegridppdata readgridppdata
 
 g /gridpp /xrootd/gridpp/user/ a \
@@ -162,11 +162,11 @@ t writeilcdata /xrootd/ilc/       a
 t readilcdata  /xrootd/ilc/       lr
 
 # "/ilc/Role=production" has full access to ilc data and read for ilc
-= ilcprod o: ilc g: /ilc r: /ilc/Role=production
+= ilcprod o: ilc g: /ilc r: production
 x ilcprod  writeilcdata readilcdata
 
 # "/ilc/Role=lcgadmin"
-= ilcsgm o: ilc g: /ilc r: /ilc/Role=lcgadmin
+= ilcsgm o: ilc g: /ilc r: lcgadmin
 x ilcsgm writeilcdata readilcdata
 
 g /ilc /xrootd/ilc/user/ a \
@@ -181,11 +181,11 @@ t writelsstdata /xrootd/lsst/       a
 t readlsstdata  /xrootd/lsst/       lr
 
 # "/lsst/Role=production" has full access to lsst data and read for lsst
-= lsstprod o: lsst g: /lsst r: /lsst/Role=production
+= lsstprod o: lsst g: /lsst r: production
 x lsstprod  writelsstdata readlsstdata
 
 # "/lsst/Role=lcgadmin"
-= lsstsgm o: lsst g: /lsst r: /lsst/Role=lcgadmin
+= lsstsgm o: lsst g: /lsst r: lcgadmin
 x lsstsgm writelsstdata readlsstdata
 
 g /lsst /xrootd/lsst/user/ a \
@@ -204,11 +204,11 @@ t writelzdata /xrootd/lz/data/     a \
 t readlzdata /xrootd/lz/      lr
 
 # "/lz/Role=production" has full access to managed LZ data and read for LZ
-= lzprod o: lz g: /lz r: /lz/Role=production
+= lzprod o: lz g: /lz r: production
 x lzprod writelzdata readlzdata
 
 # no entry in grid-mapfile
-= lzsgm o: lz g: /lz r: /lz/Role=lcgadmin
+= lzsgm o: lz g: /lz r: lcgadmin
 # "/lz/Role=lcgadmin"
 x lzsgm writelzdata readlzdata
 
@@ -225,11 +225,11 @@ t writemu3edata /xrootd/mu3e/     a
 t readmu3edata /xrootd/mu3e/      lr
 
 # "/mu3e/Role=production" has full access to managed MU3E data and read for MU3E
-= mu3eprod o: mu3e g: /mu3e r: /mu3e.org/Role=production
+= mu3eprod o: mu3e g: /mu3e r: production
 x mu3eprod  writemu3edata readmu3edata
 
 # no entry in grid-mapfile
-= mu3esgm o: mu3e g: /mu3e r: /mu3e.org/Role=lcgadmin
+= mu3esgm o: mu3e g: /mu3e r: lcgadmin
 # "/mu3e/Role=lcgadmin"
 x mu3esgm writemu3edata readmu3edata
 
@@ -245,11 +245,11 @@ t writeopsdata /xrootd/ops/       a
 t readopsdata  /xrootd/ops/       lr
 
 # "/ops/Role=production" has full access to managed OPS data and read for OPS
-= opsprod o: ops g: /ops r: /ops/Role=production
+= opsprod o: ops g: /ops r: production
 x opsprod  writeopsdata readopsdata
 
 # "/ops/Role=lcgadmin"
-= opssgm o: ops g: /ops r: /ops/Role=lcgadmin
+= opssgm o: ops g: /ops r: lcgadmin
 x opssgm writeopsdata readopsdata
 
 g /ops /xrootd/ops/user/ a \
@@ -264,11 +264,11 @@ t writewlcgdata /xrootd/wlcg/       a
 t readwlcgdata  /xrootd/wlcg/       lr
 
 # "/wlcg/Role=production" has full access to managed wlcg data and read for wlcg
-= wlcgprod o: wlcg g: /wlcg r: /wlcg/Role=production
+= wlcgprod o: wlcg g: /wlcg r: production
 x wlcgprod  writewlcgdata readwlcgdata
 
 # "/wlcg/Role=lcgadmin"
-= wlcgsgm o: wlcg g: /wlcg r: /wlcg/Role=lcgadmin
+= wlcgsgm o: wlcg g: /wlcg r: lcgadmin
 x wlcgsgm writewlcgdata readwlcgdata
 
 g /wlcg /xrootd/wlcg/user/ a \
