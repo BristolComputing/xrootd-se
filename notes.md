@@ -12,6 +12,9 @@
 - https://towardsdatascience.com/hdfs-simple-docker-installation-guide-for-data-science-workflow-b3ca764fc94b
 - https://www.digitalocean.com/community/tutorials/how-to-use-systemctl-to-manage-systemd-services-and-units
 - https://github.com/paulmillar/http-tpc-utils.git
+- [Storage accounting twiki](https://twiki.cern.ch/twiki/bin/view/LCG/StorageSpaceAccounting)
+  - [Storage accounting spec](https://twiki.cern.ch/twiki/pub/LCG/StorageSpaceAccounting/SRR.v6.pdf)
+- [CMS CRIC](https://cms-cric.cern.ch/cms/site/detail/T2_UK_SGrid_Bristol/)
 
 ```
 docker run --rm --publish 1094:1094 \
