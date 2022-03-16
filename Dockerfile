@@ -1,23 +1,33 @@
 FROM kreczko/xrootd-hdfs-build
 ARG XROOTD_HDFS_COMMIT_HASH=806c171
+ARG XROOTD_HDFS_BRANCH=kreczko-hdfs3-debug
+ARG XROOTD_HDFS_REPO=https://github.com/uobdic/xrootd-hdfs.git
 
 RUN mkdir -p /tmp/build
 WORKDIR /tmp
-RUN git clone -b kreczko-hdfs3-debug --single-branch https://github.com/uobdic/xrootd-hdfs.git \
+RUN git clone -b $XROOTD_HDFS_BRANCH --single-branch $XROOTD_HDFS_REPO \
  && cd xrootd-hdfs \
  && git checkout $XROOTD_HDFS_COMMIT_HASH
 WORKDIR /tmp/build
 RUN scl enable devtoolset-8 "cmake3 /tmp/xrootd-hdfs; make"
+RUN echo "===============================================================================" >> /tmp/build/xrootd-hdfs.info \
+  && hdfs version >> /tmp/build/xrootd-hdfs.info \
+  && echo "===============================================================================" >> /tmp/build/xrootd-hdfs.info \
+  && echo "xrootd-hdfs $(grep 'Version:' /tmp/xrootd-hdfs/rpm/xrootd-hdfs.spec | awk '{print $2}')" >> /tmp/build/xrootd-hdfs.info \
+  && echo "Source code repository $XROOTD_HDFS_REPO -b $XROOTD_HDFS_BRANCH -r $XROOTD_HDFS_COMMIT_HASH" >> /tmp/build/xrootd-hdfs.info \
+  && echo "Compiled by $(cat /etc/redhat-release) on $(date --utc +%Y-%m-%dT%H:%MZ)" >> /tmp/build/xrootd-hdfs.info \
+  && echo "===============================================================================" >> /tmp/build/xrootd-hdfs.info
 
 FROM centos:7
 
 LABEL maintainer Bristol Site Admins <lcg-admin@bristol.ac.uk>
 
-RUN rm -f /usr/lib64/libXrdHdfs* && mkdir -p  /usr/libexec/xrootd-hdfs
+RUN rm -f /usr/lib64/libXrdHdfs* && mkdir -p /usr/libexec/xrootd-hdfs /etc/xrootd_info
 COPY --from=0 /opt/hadoop /opt/hadoop
 COPY --from=0 /tmp/build/libXrdHdfs-5.so /usr/lib64
 COPY --from=0 /tmp/build/libXrdHdfsReal-5.so /usr/lib64
 COPY --from=0 /tmp/build/xrootd_hdfs_envcheck /usr/libexec/xrootd-hdfs
+COPY --from=0 /tmp/build/xrootd-hdfs.info /etc/xrootd_info/xrootd-hdfs.info
 
 RUN yum update -y && \
   yum clean all && \
