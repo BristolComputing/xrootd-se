@@ -101,6 +101,8 @@ ENV CLASSPATH=/etc/hadoop/conf.cloudera.hdfs:/opt/hadoop/share/hadoop/client/*:/
 RUN mkdir -p /var/run/xrootd /var/spool/xrootd \
   && chown xrootd:xrootd /var/run/xrootd /var/spool/xrootd
 
+RUN /etc/xrootd/scan_versions.sh
+
 VOLUME /xrootd
 
 COPY etc/supervisord.conf /etc/supervisord.conf
