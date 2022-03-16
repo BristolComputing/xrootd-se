@@ -1,8 +1,11 @@
+[![CI to Docker Hub](https://github.com/BristolComputing/xrootd-se/actions/workflows/docker-release.yml/badge.svg)](https://github.com/BristolComputing/xrootd-se/actions/workflows/docker-release.yml)
+
 # xrootd storage element
 
 This repository provides the necessary Docker images and config files to
 run an xrootd storage element in either standalone (1 node) or clustered (1 redirector + N servers).
 Configuration examples are provided for HDFS and POSIX storage backends, but the Docker images are built with HDFS dependencies (Java, xrootd-hdfs, hadoop client).
+
 
 
 ## Prerequisites
