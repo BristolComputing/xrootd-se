@@ -12,6 +12,6 @@ echo "==========================================================================
 echo ""
 echo "### xrootd-hdfs"
 echo "\`\`\`bash"
-echo "cat /etc/xrootd_info/xrootd-hdfs.info"
+cat /etc/xrootd_info/xrootd-hdfs.info
 echo "\`\`\`"
 
