@@ -7,7 +7,7 @@ echo "Installed Xrootd versions"
 echo "================================================================================"
 echo "| package | version | source |"
 echo "--- | --- | ---|"
-yum list installed | egrep "xrootd|voms|macaroons|scitokens"  | awk '{printf("|%-30s| %20s | %10s |\n", $1, $2, $3)}'
+cat /etc/xrootd_info/installed_packages.info
 echo "================================================================================"
 echo ""
 echo "### xrootd-hdfs"

@@ -10,9 +10,11 @@ RUN git clone -b $XROOTD_HDFS_BRANCH --single-branch $XROOTD_HDFS_REPO \
  && git checkout $XROOTD_HDFS_COMMIT_HASH
 WORKDIR /tmp/build
 RUN scl enable devtoolset-8 "cmake3 /tmp/xrootd-hdfs; make"
+ENV JAVA_HOME=/etc/alternatives/jre
 RUN echo "===============================================================================" >> /tmp/build/xrootd-hdfs.info \
-  && hdfs version >> /tmp/build/xrootd-hdfs.info \
-  && echo "===============================================================================" >> /tmp/build/xrootd-hdfs.info \
+  && /opt/hadoop/bin/hdfs version >> /tmp/build/xrootd-hdfs.info \
+  && echo "===============================================================================" >> /tmp/build/xrootd-hdfs.info
+RUN echo "===============================================================================" >> /tmp/build/xrootd-hdfs.info \
   && echo "xrootd-hdfs $(grep 'Version:' /tmp/xrootd-hdfs/rpm/xrootd-hdfs.spec | awk '{print $2}')" >> /tmp/build/xrootd-hdfs.info \
   && echo "Source code repository $XROOTD_HDFS_REPO -b $XROOTD_HDFS_BRANCH -r $XROOTD_HDFS_COMMIT_HASH" >> /tmp/build/xrootd-hdfs.info \
   && echo "Compiled by $(cat /etc/redhat-release) on $(date --utc +%Y-%m-%dT%H:%MZ)" >> /tmp/build/xrootd-hdfs.info \
@@ -42,8 +44,12 @@ RUN groupadd -o -g ${XROOTD_GID} xrootd
 RUN useradd -o -u ${XROOTD_UID} -g ${XROOTD_GID} -s /bin/sh xrootd
 
 RUN yum update -y -q \
-  && yum install -y epel-release \
-  && yum install -q -y \
+  && yum install -q -y epel-release https://repo.opensciencegrid.org/osg/3.6/osg-3.6-el7-release-latest.rpm \
+  && yum clean all \
+  && rm -fr /var/cache/yum
+RUN cat /etc/yum.repos.d/epel.repo
+RUN yum update -y -q \
+  && yum install -q -y --enablerepo=osg-contrib \
     cronie \
     iproute \
     java-1.8.0-openjdk-headless \
@@ -101,7 +107,11 @@ ENV CLASSPATH=/etc/hadoop/conf.cloudera.hdfs:/opt/hadoop/share/hadoop/client/*:/
 RUN mkdir -p /var/run/xrootd /var/spool/xrootd \
   && chown xrootd:xrootd /var/run/xrootd /var/spool/xrootd
 
-RUN /etc/xrootd/scan_versions.sh
+# gather info and test gathering script
+ADD etc/xrootd/list_installed.sh /tmp/list_installed.sh
+RUN /tmp/list_installed.sh >> /etc/xrootd_info/installed_packages.info
+ADD etc/xrootd/scan_versions.sh /tmp/scan_versions.sh
+RUN /tmp/scan_versions.sh
 
 VOLUME /xrootd
 
