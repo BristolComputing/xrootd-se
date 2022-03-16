@@ -52,6 +52,7 @@ RUN yum update -y -q \
     which \
     xrootd \
     xrootd-client \
+    xrootd-cmstfc \
     xrootd-lcmaps \
     xrootd-scitokens \
     xrootd-selinux \
