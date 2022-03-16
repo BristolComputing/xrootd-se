@@ -11,14 +11,11 @@ RUN git clone -b $XROOTD_HDFS_BRANCH --single-branch $XROOTD_HDFS_REPO \
 WORKDIR /tmp/build
 RUN scl enable devtoolset-8 "cmake3 /tmp/xrootd-hdfs; make"
 ENV JAVA_HOME=/etc/alternatives/jre
-RUN echo "===============================================================================" >> /tmp/build/xrootd-hdfs.info \
-  && /opt/hadoop/bin/hdfs version >> /tmp/build/xrootd-hdfs.info \
-  && echo "===============================================================================" >> /tmp/build/xrootd-hdfs.info
-RUN echo "===============================================================================" >> /tmp/build/xrootd-hdfs.info \
+RUN /opt/hadoop/bin/hdfs version >> /tmp/build/xrootd-hdfs.info \
+  && echo "" >> /tmp/build/xrootd-hdfs.info \
   && echo "xrootd-hdfs $(grep 'Version:' /tmp/xrootd-hdfs/rpm/xrootd-hdfs.spec | awk '{print $2}')" >> /tmp/build/xrootd-hdfs.info \
   && echo "Source code repository $XROOTD_HDFS_REPO -b $XROOTD_HDFS_BRANCH -r $XROOTD_HDFS_COMMIT_HASH" >> /tmp/build/xrootd-hdfs.info \
-  && echo "Compiled by $(cat /etc/redhat-release) on $(date --utc +%Y-%m-%dT%H:%MZ)" >> /tmp/build/xrootd-hdfs.info \
-  && echo "===============================================================================" >> /tmp/build/xrootd-hdfs.info
+  && echo "Compiled by $(cat /etc/redhat-release) on $(date --utc +%Y-%m-%dT%H:%MZ)" >> /tmp/build/xrootd-hdfs.info
 
 FROM centos:7
 
