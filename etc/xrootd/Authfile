@@ -67,7 +67,7 @@ t writecmsdata /xrootd/cms/store/backfill/       a \
                /xrootd/cms/store/unmerged/       a \
                /xrootd/cms/store/user/rucio/     a
 
-t readcmsdata  /xrootd/cms/store/                lr
+t readcmsdata  /xrootd/cms/                lr
 
 # "/cms/Role=production" has full access to managed CMS data and read for CMS
 = cmsprod o: cms g: /cms r: production
