@@ -251,10 +251,11 @@ x opsprod  writeopsdata readopsdata
 # "/ops/Role=lcgadmin"
 = opssgm o: ops g: /ops r: lcgadmin
 x opssgm writeopsdata readopsdata
+g /ops writeopsdata readopsdata
 
-g /ops /xrootd/ops/user/ a \
-       /xrootd/ops/temp/ a \
-       readopsdata
+# g /ops /xrootd/ops/user/ a \
+#        /xrootd/ops/temp/ a \
+#        readopsdata
 
 ###############################################################################################
 ### wlcg
