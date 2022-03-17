@@ -28,7 +28,7 @@ services:
         target: /etc/supervisord.d/
         read_only: true
       - type: bind
-        source: ./data
+        source: ./data/xrootd
         target: /xrootd
       - "/etc/timezone:/etc/timezone:ro"
       - "/etc/localtime:/etc/localtime:ro"
@@ -74,7 +74,7 @@ services:
         source: ./etc/supervisord.d
         target: /etc/supervisord.d/
       - type: bind
-        source: ./data
+        source: ./data/xrootd
         target: /xrootd
       - "/etc/timezone:/etc/timezone:ro"
       - "/etc/localtime:/etc/localtime:ro"
