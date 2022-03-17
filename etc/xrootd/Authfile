@@ -65,9 +65,26 @@ t writecmsdata /xrootd/cms/store/backfill/       a \
                /xrootd/cms/store/test/loadtest/  a \
                /xrootd/cms/store/test/rucio/     a \
                /xrootd/cms/store/unmerged/       a \
-               /xrootd/cms/store/user/rucio/     a
+               /xrootd/cms/store/user/rucio/     a \
+               /store/backfill/       a \
+               /store/data/           a \
+               /store/express/        a \
+               /store/generator/      a \
+               /store/group/rucio/    a \
+               /store/hidata/         a \
+               /store/himc/           a \
+               /store/hirelval/       a \
+               /store/mc/             a \
+               /store/relval/         a \
+               /store/results/        a \
+               /store/temp/           a \
+               /store/test/loadtest/  a \
+               /store/test/rucio/     a \
+               /store/unmerged/       a \
+               /store/user/rucio/     a
 
-t readcmsdata  /xrootd/cms/                lr
+t readcmsdata  /xrootd/cms/                lr \
+               /store/                     lr
 
 # "/cms/Role=production" has full access to managed CMS data and read for CMS
 = cmsprod o: cms g: /cms r: production
@@ -77,14 +94,18 @@ x cmsprod  writecmsdata readcmsdata
 = cmssgm o: cms g: /cms r: lcgadmin
 x cmssgm /xrootd/cms/store/user/sam/ a \
          /xrootd/cms/store/unmerged/SAM/ a \
+         /store/user/sam/ a \
+         /store/unmerged/SAM/ a \
          readcmsdata
 
 # CMS users have full access to their own directory and temp, and read for CMS
 # While xrootd allows the user to *attempt* any operation - even in other user's
 # home directories
-g /cms /xrootd/cms/store/user/ a \
-       /xrootd/cms/store/temp/ a \
-       readcmsdata
+g /cms  /xrootd/cms/store/user/ a \
+        /xrootd/cms/store/temp/ a \
+        /store/user/ a \
+        /store/temp/ a \
+        readcmsdata
 
 # = cmsusr o: cms g: /cms
 #
