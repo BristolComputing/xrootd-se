@@ -38,9 +38,15 @@ xrdcp /bin/sh  root://172.19.0.3:1094///xrootd/test
 
 
 ```
+# standalone
 docker exec -ti xrootd-se_${xrootdse}_1 supervisorctl restart xrootd-standalone
+# clustered
 docker exec -ti xrootd-se_${xrootdse}_1 supervisorctl restart xrootd-clustered
 docker exec -ti xrootd-se_${xrootdgateway}_1 supervisorctl restart xrootd-clustered
+# cmsd
+docker exec -ti xrootd-se_${xrootdse}_1 supervisorctl restart cmsd
+docker exec -ti xrootd-se_${xrootdgateway}_1 supervisorctl restart cmsd
+
 ```
 
 
@@ -90,4 +96,14 @@ voms-proxy-init --voms dteam
 xrdcp /bin/sh  root://${xrootdse}:1094///xrootd/test
 xrdfs ${xrootdse}:1094 query checksum /xrootd/test
 xrdfs ${xrootdse}:1094 rm /xrootd/test
+```
+
+## HDFS Commands
+
+```bash
+docker exec -ti xrootd-se_${xrootdse}_1 hdfs dfs -ls /
+docker exec -ti xrootd-se_${xrootdse}_1 hdfs dfs -ls /xrootd
+
+docker exec -ti xrootd-se_${xrootdgateway}_1 hdfs dfs -ls /
+docker exec -ti xrootd-se_${xrootdgateway}_1 hdfs dfs -ls /xrootd
 ```
