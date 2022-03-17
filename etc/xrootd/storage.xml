@@ -41,7 +41,7 @@
   <!-- End xroot -->
 
   <!-- Begin davs -->
-  <lfn-to-pfn protocol="davs" chain="direct" path-match="(.*)" result="davs://xrootd.phy.bris.ac.uk:1094$1"/>
+  <lfn-to-pfn protocol="davs" chain="direct" path-match="(.*)" result="davs://xrootd.phy.bris.ac.uk:1094$1" />
   <!--- End davs -->
 
   <!-- Begin xroot fallback-->
