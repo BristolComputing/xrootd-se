@@ -75,10 +75,10 @@ All created directories will be owned by `xrootd:xrootd`.
 
 ### IP forwarding
 
-If 
+If
 ```bash
 cat /proc/sys/net/ipv4/ip_forward
-# or 
+# or
 cat /proc/sys/net/ipv6/conf/all/forwarding
 ```
 returns `0` you must enable the IP forwarding for docker to work.
@@ -89,6 +89,7 @@ echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.d/99-ip_forwaring.conf
 echo "net.ipv6.conf.all.forwarding = 1" >> /etc/sysctl.d/99-ip_forwaring.conf
 sysctl -p /etc/sysctl.d/99-ip_forwaring.conf
 ```
+
 ## Production
 
 For production we use `systemctl` to start/stop our containers.
@@ -137,7 +138,7 @@ chown xrootd:xrootd /var/run/xrootd /var/log/xrootd
 
 Make sure that `XROOTD_GID` and `XROOTD_UID` correspond to the `gid` and `uid` of the `xrootd` user on the cluster.
 
-Alternatively, instead of building the image yourself, you can use the tagged images from https://hub.docker.com/repository/docker/kreczko/xrootdse
+Alternatively, instead of building the image yourself, you can use the tagged images from [Docker hub](https://hub.docker.com/repository/docker/kreczko/xrootdse).
 Remember to change the version in `/etc/systemd/system/docker.xrootdse.service`.
 
 #### Step 2: Set up systemctl unit
@@ -177,24 +178,103 @@ systemctl start docker.xrootdgateway
 
 ### Updates
 
-#### Deploying updated container or config files
+This documentation assumes no local, uncommitted changes exist and production is always deployed from a tagged release.
+
+#### On redirector
 
 ```bash
+UPGRADE_DIR=/root/xroot_upgrades/$(date +%Y-%m-%d)
+mkdir -p ${UPGRADE_DIR}
 cd /opt/xrootd-se
 git fetch origin
-git checkout main
-git pull origin main
-git checkout <new tag>
-```
-Then redo Step 1 for the node in question. You can skip the certificate steps.
-If the systemd files changed, please also run Step 2 but with the following modifications
-```bash
-systemctl stop docker.xrootdse # or docker.xrootdgateway
-# copy new files and run sed command
+
+previous_tag=$(git describe --tags --abbrev=0)
+echo $previous_tag >> ${UPGRADE_DIR}/previous_tag
+# set the version you want. To list all available tags: git tag -l
+new_tag=v<version number>
+echo $new_tag >> ${UPGRADE_DIR}/new_tag
+git checkout $new_tag
+
+docker tag kreczko/xrootdse:latest kreczko/xrootdse:$previous_tag
+docker pull kreczko/xrootdse:$new_tag
+
+systemctl stop docker.xrootdse
+cp -p /etc/systemd/system/docker.xrootdse.service ${UPGRADE_DIR}/.
+cp etc/systemd/system/docker.xrootdse.service /etc/systemd/system/.
 systemctl daemon-reload
-# enable and start the updated service
+systemctl start docker.xrootdse
 ```
 
+#### on each gateway
+
+```bash
+UPGRADE_DIR=/root/xroot_upgrades/$(date +%Y-%m-%d)
+mkdir -p ${UPGRADE_DIR}
+cd /opt/xrootd-se
+git fetch origin
+
+previous_tag=$(git describe --tags --abbrev=0)
+echo $previous_tag >> ${UPGRADE_DIR}/previous_tag
+# set the version you want. To list all available tags: git tag -l
+new_tag=v<version number>
+echo $new_tag >> ${UPGRADE_DIR}/new_tag
+git checkout $new_tag
+
+docker tag kreczko/xrootdse:latest kreczko/xrootdse:$previous_tag
+docker pull kreczko/xrootdse:$new_tag
+docker tag kreczko/xrootdse:$new_tag kreczko/xrootdse:latest
+
+systemctl stop docker.xrootdgateway
+cp -p /etc/systemd/system/docker.xrootdgateway.service ${UPGRADE_DIR}/.
+cp etc/systemd/system/docker.xrootdgateway.service /etc/systemd/system/.
+systemctl daemon-reload
+systemctl start docker.xrootdgateway
+
+```
+
+#### Restore previous version
+
+In case something goes wrong, you can undo the changes by:
+
+On redirector:
+
+```bash
+UPGRADE_DIR=<select the upgrade dir that you want to undo>
+cd /opt/xrootd-se
+git fetch origin
+previous_tag=$(cat ${UPGRADE_DIR}/previous_tag)
+new_tag=$(cat ${UPGRADE_DIR}/new_tag)
+git checkout $previous_tag
+
+docker tag kreczko/xrootdse:latest kreczko/xrootdse:$new_tag
+docker pull kreczko/xrootdse:$previous_tag
+docker tag kreczko/xrootdse:$previous_tag kreczko/xrootdse:latest
+
+systemctl stop docker.xrootdse
+cp -p ${UPGRADE_DIR}/docker.xrootdse.service /etc/systemd/system/docker.xrootdse.service
+systemctl daemon-reload
+systemctl start docker.xrootdse
+```
+
+On each gateway:
+
+```bash
+UPGRADE_DIR=<select the upgrade dir that you want to undo>
+cd /opt/xrootd-se
+git fetch origin
+previous_tag=$(cat ${UPGRADE_DIR}/previous_tag)
+new_tag=$(cat ${UPGRADE_DIR}/new_tag)
+git checkout $previous_tag
+
+docker tag kreczko/xrootdse:latest kreczko/xrootdse:$new_tag
+docker pull kreczko/xrootdse:$previous_tag
+docker tag kreczko/xrootdse:$previous_tag kreczko/xrootdse:latest
+
+systemctl stop docker.xrootdse
+cp -p ${UPGRADE_DIR}/docker.xrootdgateway.service /etc/systemd/system/docker.xrootdgateway.service
+systemctl daemon-reload
+systemctl start docker.xrootdgateway
+```
 
 ### Restarting and reloading
 
@@ -213,21 +293,32 @@ systemctl daemon-reload
 ### Logs
 
 Logs for the xrootd roles will be available on the host under
- - `/var/log/xrootd/clustered/cmsd.log`
- - `/var/log/xrootd/clustered/xrootd.log`
+
+- `/var/log/xrootd/clustered/cmsd.log`
+- `/var/log/xrootd/clustered/xrootd.log`
 
 for the clustered version and in `/var/log/xrootd/clustered/standalone` for the standalone version.
 
 ## For development
+
 ### Docker-compose
 
-From https://docs.docker.com/compose/install/:
+From [Official Docs](https://docs.docker.com/compose/install/):
 
-```
-bash
+```bash
 sudo curl -L \
 "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" \
 -o /usr/local/bin/docker-compose
 
 sudo chmod +x /usr/local/bin/docker-compose
 ```
+
+## Releases
+
+To make a release:
+
+- upgrade version tag in
+  - `etc/systemd/system/docker.xrootdgateway.service`
+  - `etc/systemd/system/docker.xrootdse.service`
+- create git tag: `git tag v<version number>`
+- push tag to main repo: `git push origin v<version number>`
