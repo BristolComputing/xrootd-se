@@ -188,15 +188,17 @@ mkdir -p ${UPGRADE_DIR}
 cd /opt/xrootd-se
 git fetch origin
 
-previous_tag=$(git describe --tags --abbrev=0)
+previous_tag=$(git describe --tags --abbrev=0 | sed "s/v//g")
 echo $previous_tag >> ${UPGRADE_DIR}/previous_tag
 # set the version you want. To list all available tags: git tag -l
-new_tag=v<version number>
+new_tag=<version number>
 echo $new_tag >> ${UPGRADE_DIR}/new_tag
-git checkout $new_tag
+git checkout v$new_tag
+git checkout -b upgrading_from_${previous_tag}_to_${new_tag}
 
 docker tag kreczko/xrootdse:latest kreczko/xrootdse:$previous_tag
 docker pull kreczko/xrootdse:$new_tag
+docker tag kreczko/xrootdse:$new_tag kreczko/xrootdse:latest
 
 systemctl stop docker.xrootdse
 cp -p /etc/systemd/system/docker.xrootdse.service ${UPGRADE_DIR}/.
@@ -213,12 +215,12 @@ mkdir -p ${UPGRADE_DIR}
 cd /opt/xrootd-se
 git fetch origin
 
-previous_tag=$(git describe --tags --abbrev=0)
+previous_tag=$(git describe --tags --abbrev=0 | sed "s/v//g")
 echo $previous_tag >> ${UPGRADE_DIR}/previous_tag
 # set the version you want. To list all available tags: git tag -l
-new_tag=v<version number>
+new_tag=<version number>
 echo $new_tag >> ${UPGRADE_DIR}/new_tag
-git checkout $new_tag
+git checkout v$new_tag
 
 docker tag kreczko/xrootdse:latest kreczko/xrootdse:$previous_tag
 docker pull kreczko/xrootdse:$new_tag
@@ -244,7 +246,7 @@ cd /opt/xrootd-se
 git fetch origin
 previous_tag=$(cat ${UPGRADE_DIR}/previous_tag)
 new_tag=$(cat ${UPGRADE_DIR}/new_tag)
-git checkout $previous_tag
+git checkout v$previous_tag
 
 docker tag kreczko/xrootdse:latest kreczko/xrootdse:$new_tag
 docker pull kreczko/xrootdse:$previous_tag
