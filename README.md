@@ -203,6 +203,7 @@ docker tag kreczko/xrootdse:$new_tag kreczko/xrootdse:latest
 systemctl stop docker.xrootdse
 cp -p /etc/systemd/system/docker.xrootdse.service ${UPGRADE_DIR}/.
 cp etc/systemd/system/docker.xrootdse.service /etc/systemd/system/.
+sed -i "s/xrootdsefqdn/$(hostname -f)/g" /etc/systemd/system/docker.xrootdse.service
 systemctl daemon-reload
 systemctl start docker.xrootdse
 ```
@@ -221,6 +222,7 @@ echo $previous_tag >> ${UPGRADE_DIR}/previous_tag
 new_tag=<version number>
 echo $new_tag >> ${UPGRADE_DIR}/new_tag
 git checkout v$new_tag
+git checkout -b upgrading_from_${previous_tag}_to_${new_tag}
 
 docker tag kreczko/xrootdse:latest kreczko/xrootdse:$previous_tag
 docker pull kreczko/xrootdse:$new_tag
@@ -229,6 +231,7 @@ docker tag kreczko/xrootdse:$new_tag kreczko/xrootdse:latest
 systemctl stop docker.xrootdgateway
 cp -p /etc/systemd/system/docker.xrootdgateway.service ${UPGRADE_DIR}/.
 cp etc/systemd/system/docker.xrootdgateway.service /etc/systemd/system/.
+sed -i "s/xrootdsefqdn/$(hostname -f)/g" /etc/systemd/system/docker.xrootdgateway.service
 systemctl daemon-reload
 systemctl start docker.xrootdgateway
 
@@ -274,6 +277,7 @@ docker tag kreczko/xrootdse:$previous_tag kreczko/xrootdse:latest
 
 systemctl stop docker.xrootdse
 cp -p ${UPGRADE_DIR}/docker.xrootdgateway.service /etc/systemd/system/docker.xrootdgateway.service
+sed -i "s/xrootdsefqdn/$(hostname -f)/g" /etc/systemd/system/docker.xrootdse.service
 systemctl daemon-reload
 systemctl start docker.xrootdgateway
 ```
