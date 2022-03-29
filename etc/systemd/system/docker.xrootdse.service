@@ -17,6 +17,7 @@ ExecStart=/usr/bin/docker run --rm --name %n \
     -v /opt/xrootd-se/.secrets/prod:/.secrets:ro \
     -v /etc/timezone:/etc/timezone:ro \
     -v /etc/localtime:/etc/localtime:ro \
+    -v /cvmfs/cms.cern.ch/SITECONF:/cvmfs/cms.cern.ch/SITECONF:ro \
     -v /cvmfs/grid.cern.ch/etc/grid-security/certificates:/etc/grid-security/certificates:ro \
     -v /cvmfs/grid.cern.ch/etc/grid-security/vomsdir:/etc/grid-security/vomsdir:ro \
     -v /cvmfs/grid.cern.ch/etc/grid-security/vomses:/etc/grid-security/vomses:ro \
