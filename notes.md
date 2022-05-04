@@ -111,6 +111,8 @@ docker exec -ti xrootd-se_${xrootdgateway}_1 hdfs dfs -ls /xrootd
 
 ## Debugging
 
+### Same certs as xrootd
+
 ```diff
 -http.cadir /etc/grid-security/certificates
 -http.cert /etc/grid-security/xrd/hostcert.pem
@@ -121,3 +123,21 @@ docker exec -ti xrootd-se_${xrootdgateway}_1 hdfs dfs -ls /xrootd
 +http.httpsmode auto
 ```
 did not fix the tests
+
+### Register new HTTP port:
+
+```diff
+diff --git a/etc/xrootd/config.d/20-https.cfg b/etc/xrootd/config.d/20-https.cfg
+index a309486..de6bd6d 100644
+--- a/etc/xrootd/config.d/20-https.cfg
++++ b/etc/xrootd/config.d/20-https.cfg
+@@ -11,6 +11,7 @@ if exec xrootd
+   http.listingdeny no
+   http.staticpreload http://static/robots.txt /etc/xrootd/robots.txt
+   xrd.protocol http:$(httpsPort) /usr/lib64/libXrdHttp.so
++  xrd.protocol http:$(httpsPort) +port
+   http.selfhttps2http yes
+
+   # Enable third-party-copy
+```
+as per [docs](https://xrootd.slac.stanford.edu/doc/dev54/xrd_config.htm#_Toc88513976) and [github issue](https://github.com/xrootd/xrootd/issues/1087)
