@@ -107,3 +107,17 @@ docker exec -ti xrootd-se_${xrootdse}_1 hdfs dfs -ls /xrootd
 docker exec -ti xrootd-se_${xrootdgateway}_1 hdfs dfs -ls /
 docker exec -ti xrootd-se_${xrootdgateway}_1 hdfs dfs -ls /xrootd
 ```
+
+
+## Debugging
+
+```diff
+-http.cadir /etc/grid-security/certificates
+-http.cert /etc/grid-security/xrd/hostcert.pem
+-http.key /etc/grid-security/xrd/hostkey.pem
++#http.cadir /etc/grid-security/certificates
++#http.cert /etc/grid-security/xrd/hostcert.pem
++#http.key /etc/grid-security/xrd/hostkey.pem
++http.httpsmode auto
+```
+did not fix the tests
