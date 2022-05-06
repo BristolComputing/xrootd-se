@@ -1,0 +1,54 @@
+---
+## STATIC CONFIGURATION
+log:
+  level: INFO
+
+api:
+  dashboard: true
+  insecure: true
+
+entrypoints:
+  xrootd-passthrough:
+    address: ":1194"
+
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    exposedByDefault: false
+  file:
+    filename: "/etc/traefik/traefik.yml"
+
+
+http:
+  routers:
+    to-gateway:
+      entrypoints: [xrootd-passthrough]
+      service: xrootd-gateway
+      rule: "Path(`/xrootd`)"
+
+  services:
+    xrootd-gateway:
+      loadBalancer:
+        servers:
+          - url: "https://io-37-02.acrc.bris.ac.uk:1194/"
+
+#   serversTransports:
+#     mytransport:
+#       certificates:
+#         - certFile: /etc/grid-security/hostcert.pem
+#           keyFile: /etc/grid-security/hostkey.pem
+#       rootCA: [/etc/grid-security/certificates/*.pem]
+    
+# tls:
+#   certificates:
+#     - certificate:
+#         certificate: /etc/grid-security/hostcert.pem
+#         key: /etc/grid-security/hostkey.pem
+#       domains:
+#         - ""
+#       name: xrootd-passthrough
+#       skipVerify: true
+#   options:
+#     default:
+#       cipherSuites:
+#         - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
