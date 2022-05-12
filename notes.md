@@ -61,6 +61,58 @@ xrdfs xrootd.phy.bris.ac.uk:1094 ls /xrootd/test
 xrdfs xrootd.phy.bris.ac.uk:1094 query checksum /xrootd/test
 ```
 
+## Infrastructure
+
+Current issue:
+```mermaid
+sequenceDiagram
+    participant Client
+    participant XrootD Redirector
+    participant XrootD Gateway
+    participant HDFS
+
+    Client ->> XrootD Redirector: rename /path/to/file /path/to/file.new
+    XrootD Redirector ->> XrootD Gateway: rename /path/to/file /path/to/file.new
+    XrootD Gateway ->> HDFS: rename /path/to/file /path/to/file.new
+    HDFS -->> XrootD Gateway: rename done
+    Note left of Client: Wait 5 seconds
+    Client ->> XrootD Redirector: stat /path/to/file.new
+    XrootD Redirector ->> Client: /path/to/file.new does not exist
+```
+
+What we want to try:
+```mermaid
+sequenceDiagram
+    participant Client
+    participant XrootD Redirector
+    participant XrootD Gateway
+    participant HDFS
+
+    Client ->> XrootD Redirector: stat /path/to/file.new
+    XrootD Redirector ->> XrootD Gateway: stat /path/to/file.new
+    XrootD Gateway ->> HDFS: stat /path/to/file.new
+    HDFS -->> XrootD Gateway: stat results
+    XrootD Gateway -->> Client: stat results
+```
+or
+```mermaid
+sequenceDiagram
+    participant Client
+    participant XrootD Redirector
+    participant XrootD Gateway
+    participant HDFS
+
+    Client ->> XrootD Redirector: stat /path/to/file.new
+    XrootD Redirector ->> HDFS: stat /path/to/file.new
+    HDFS -->> XrootD Redirector: stat results
+    XrootD Redirector -->> Client: stat results
+```
+
+Solution (from from https://github.com/xrootd/xrootd/issues/1703): 
+```
+cms.dfs lookup central redirect immed
+```
+
 ## Check hostnames
 
 ```bash
