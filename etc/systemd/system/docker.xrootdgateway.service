@@ -22,7 +22,7 @@ ExecStart=/usr/bin/docker run --rm --name %n \
     -v /opt/cloudera:/opt/cloudera:ro \
     -v /etc/hadoop:/etc/hadoop:ro \
     -p 1194:1194 \
-    kreczko/xrootdse:v3.0.2
+    kreczko/xrootdse:3.0.2
 ExecStop=/usr/bin/docker stop %n
 ExecReload=/usr/bin/docker exec -ti %n supervisorctl restart cmsd \
     && /usr/bin/docker exec -ti %n supervisorctl restart xrootd-clustered
