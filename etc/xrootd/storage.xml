@@ -13,6 +13,14 @@
 <storage-mapping>
   <!-- Mappings are applied in order, so first to match wins. as store is most generic make sure its last -->
 
+  <!-- Bypass all correct paths -->
+  <lfn-to-pfn protocol="direct" path-match="/xrootd/(.*)" result="/xrootd/$1" />
+  <pfn-to-lfn protocol="direct" path-match="/xrootd/(.*)" result="/xrootd/$1" />
+
+  <lfn-to-pfn protocol="direct" path-match="/cksums//xrootd/(.*)" result="/cksums/xrootd/$1" />
+  <pfn-to-lfn protocol="direct" path-match="/cksums//xrootd/(.*)" result="/cksums/xrootd/$1" />
+  <!-- End bypass -->
+
   <!-- Specific for LoadTest07  -->
   <lfn-to-pfn protocol="direct" path-match=".*/LoadTest07_Bristol_(.*)_.*_.*" result="/xrootd/cms/store/PhEDEx_LoadTest07/LoadTest07_Debug_T2_UK_SGrid_Bristol/LoadTest07_SouthGrid_Bristol_$1" />
   <lfn-to-pfn protocol="direct" path-match=".*/LoadTest07_SouthGrid_Bristol_(.*)_.*_.*" result="/xrootd/cms/store/PhEDEx_LoadTest07/LoadTest07_Debug_T2_UK_SGrid_Bristol/LoadTest07_SouthGrid_Bristol_$1" />
