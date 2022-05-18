@@ -11,7 +11,8 @@
 ## under /xrootd.
 ## There must be at least one such user in order to create the
 ## private dirs for users willing to store their data in the facility
-u xrootd /xrootd/ a
+u xrootd /xrootd/ a \
+         /store/ a
 
 ###############################################################################################
 ### alice
@@ -101,9 +102,9 @@ x cmssgm /xrootd/cms/store/user/sam/ a \
 # CMS users have full access to their own directory and temp, and read for CMS
 # While xrootd allows the user to *attempt* any operation - even in other user's
 # home directories
-g /cms  /xrootd/cms/store/user/ a \
+g /cms  /xrootd/cms/store/user a \
         /xrootd/cms/store/temp/ a \
-        /store/user/ a \
+        /store/user a \
         /store/temp/ a \
         readcmsdata
 
