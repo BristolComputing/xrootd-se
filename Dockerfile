@@ -1,5 +1,5 @@
 FROM kreczko/xrootd-hdfs-build
-ARG XROOTD_HDFS_COMMIT_HASH=806c171
+ARG XROOTD_HDFS_COMMIT_HASH=74fc090
 ARG XROOTD_HDFS_BRANCH=kreczko-hdfs3-debug
 ARG XROOTD_HDFS_REPO=https://github.com/uobdic/xrootd-hdfs.git
 
@@ -36,7 +36,7 @@ RUN yum update -y && \
 # OSG default ID 10940 but we want 1094 (or 1000 for testing)
 ARG XROOTD_GID=1094
 ARG XROOTD_UID=1094
-ARG XROOTD_VERSION="5.4.2-3.el7"
+ARG XROOTD_VERSION="5.4.3-1.el7"
 
 RUN groupadd -o -g ${XROOTD_GID} xrootd
 RUN useradd -o -u ${XROOTD_UID} -g ${XROOTD_GID} -s /bin/sh xrootd
