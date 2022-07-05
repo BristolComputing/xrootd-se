@@ -6,8 +6,8 @@ ARG XROOTD_HDFS_REPO=https://github.com/uobdic/xrootd-hdfs.git
 RUN mkdir -p /tmp/build
 WORKDIR /tmp
 RUN git clone -b $XROOTD_HDFS_BRANCH --single-branch $XROOTD_HDFS_REPO \
- && cd xrootd-hdfs \
- && git checkout $XROOTD_HDFS_COMMIT_HASH
+  && cd xrootd-hdfs \
+  && git checkout $XROOTD_HDFS_COMMIT_HASH
 WORKDIR /tmp/build
 RUN scl enable devtoolset-8 "cmake3 /tmp/xrootd-hdfs; make"
 ENV JAVA_HOME=/etc/alternatives/jre
@@ -48,21 +48,21 @@ RUN yum update -y -q \
 RUN cat /etc/yum.repos.d/epel.repo
 RUN yum update -y -q \
   && yum install -q -y --enablerepo=osg-contrib \
-    cronie \
-    iproute \
-    java-1.8.0-openjdk-headless \
-    less \
-    supervisor \
-    which \
-    xrootd \
-    xrootd-client \
-    xrootd-cmstfc \
-    xrootd-lcmaps \
-    xrootd-scitokens \
-    xrootd-selinux \
-    xrootd-server-${XROOTD_VERSION} \
-    xrootd-server-libs \
-    xrootd-voms \
+  cronie \
+  iproute \
+  java-1.8.0-openjdk-headless \
+  less \
+  supervisor \
+  which \
+  xrootd \
+  xrootd-client \
+  xrootd-cmstfc \
+  xrootd-lcmaps \
+  xrootd-scitokens \
+  xrootd-selinux \
+  xrootd-server-${XROOTD_VERSION} \
+  xrootd-server-libs \
+  xrootd-voms \
   && yum clean all \
   && rm -fr /var/cache/yum
 
@@ -104,6 +104,21 @@ ENV CLASSPATH=/etc/hadoop/conf.cloudera.hdfs:/opt/hadoop/share/hadoop/client/*:/
 # xrootd folder fixes
 RUN mkdir -p /var/run/xrootd /var/spool/xrootd \
   && chown xrootd:xrootd /var/run/xrootd /var/spool/xrootd
+
+# install python3 and other dependencies for xrdsum plugin
+WORKDIR /tmp
+RUN yum install -y -q wget \
+  && yum clean all \
+  && rm -fr /var/cache/yum
+RUN curl -LO "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh" \
+  && bash Miniconda3-latest-Linux-x86_64.sh -p /miniconda -b \
+  && rm -f Miniconda3-latest-Linux-x86_64.sh \
+  && ln -s /miniconda/bin/conda /usr/bin/conda \
+  && conda update -y conda \
+  && conda init \
+  && conda install -y -q python=3.10 \
+  && /miniconda/bin/pip install xrdsum[hdfs]
+ENV PATH=/miniconda/bin:$PATH
 
 # gather info and test gathering script
 ADD etc/xrootd/list_installed.sh /tmp/list_installed.sh
