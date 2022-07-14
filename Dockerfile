@@ -1,6 +1,6 @@
 FROM kreczko/xrootd-hdfs-build
-ARG XROOTD_HDFS_COMMIT_HASH=74fc090
-ARG XROOTD_HDFS_BRANCH=kreczko-hdfs3-debug
+ARG XROOTD_HDFS_COMMIT_HASH=66d7c97
+ARG XROOTD_HDFS_BRANCH=kreczko-checksum-debug
 ARG XROOTD_HDFS_REPO=https://github.com/uobdic/xrootd-hdfs.git
 
 RUN mkdir -p /tmp/build
@@ -28,7 +28,7 @@ COPY --from=0 /tmp/build/libXrdHdfsReal-5.so /usr/lib64
 COPY --from=0 /tmp/build/xrootd_hdfs_envcheck /usr/libexec/xrootd-hdfs
 COPY --from=0 /tmp/build/xrootd-hdfs.info /etc/xrootd_info/xrootd-hdfs.info
 
-RUN yum update -y && \
+RUN yum update -y -q && \
   yum clean all && \
   rm -rf /var/cache/yum/*
 
