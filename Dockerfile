@@ -119,7 +119,7 @@ RUN curl -LO "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64
   && conda install -y -q python=3.10 \
   && conda clean --all
 ENV PATH=/miniconda/bin:$PATH
-ARG XRDSUM_VERSION=0.2.2
+ARG XRDSUM_VERSION=0.2.3
 RUN /miniconda/bin/pip --no-cache-dir install xrdsum[hdfs]==${XRDSUM_VERSION}
 
 # gather info and test gathering script
