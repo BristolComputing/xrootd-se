@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-RESULT=$(xrdsum get --store-result --chunk-size 64 --verbose --storage-catalog /etc/xrootd/storage.xml "$1")
+RESULT=$(xrdsum --verbose --debug -l /var/log/xrootd/clustered/checksum.log get --store-result --read-size 128 "$1")
 ECODE=$?
 
 # XRootD expects return on stdout - checksum followed by a new line
