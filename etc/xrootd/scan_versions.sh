@@ -12,3 +12,6 @@ echo "\`\`\`bash"
 cat /etc/xrootd_info/xrootd-hdfs.info
 echo "\`\`\`"
 
+echo "Python packages"
+/miniconda/bin/python -m pip list >> /etc/xrootd_info/python_packages.info
+cat /etc/xrootd_info/python_packages.info
