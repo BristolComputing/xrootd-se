@@ -12,6 +12,13 @@
 -->
 <storage-mapping>
   <!-- Mappings are applied in order, so first to match wins. as store is most generic make sure its last -->
+  <!-- Bypass all correct paths -->
+  <lfn-to-pfn protocol="direct" path-match="/+xrootd/(.*)" result="/xrootd/$1" />
+  <pfn-to-lfn protocol="direct" path-match="/+xrootd/(.*)" result="/xrootd/$1" />
+
+  <lfn-to-pfn protocol="direct" path-match="/cksums//xrootd/(.*)" result="/cksums/xrootd/$1" />
+  <pfn-to-lfn protocol="direct" path-match="/cksums//xrootd/(.*)" result="/cksums/xrootd/$1" />
+  <!-- End bypass -->
 
   <!-- Bypass all correct paths -->
   <lfn-to-pfn protocol="direct" path-match="/xrootd/(.*)" result="/xrootd/$1" />

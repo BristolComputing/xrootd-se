@@ -107,8 +107,6 @@ g /cms  /xrootd/cms/store/user a \
         /store/user a \
         /store/temp/ a \
         readcmsdata
-
-
 # = cmsusr o: cms g: /cms
 #
 # # CMS users can read CMS data and have full access to their HOME folders
