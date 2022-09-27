@@ -42,7 +42,7 @@ RUN groupadd -o -g ${XROOTD_GID} xrootd
 RUN useradd -o -u ${XROOTD_UID} -g ${XROOTD_GID} -s /bin/sh xrootd
 
 RUN yum update -y -q \
-  && yum install -q -y epel-release https://repo.opensciencegrid.org/osg/3.6/osg-3.6-el7-release-latest.rpm \
+  && yum install -q -y epel-release \
   && yum clean all \
   && rm -fr /var/cache/yum
 RUN cat /etc/yum.repos.d/epel.repo
