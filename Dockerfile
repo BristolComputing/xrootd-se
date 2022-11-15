@@ -36,16 +36,19 @@ RUN yum update -y -q && \
 # OSG default ID 10940 but we want 1094 (or 1000 for testing)
 ARG XROOTD_GID=1094
 ARG XROOTD_UID=1094
-ARG XROOTD_VERSION="5.5.0-1.el7"
+ARG XROOTD_VERSION="5.5.2-1.el7.x86_64"
 
 RUN groupadd -o -g ${XROOTD_GID} xrootd
 RUN useradd -o -u ${XROOTD_UID} -g ${XROOTD_GID} -s /bin/sh xrootd
 
+COPY etc/yum.repos.d/osg-contrib.repo /etc/yum.repos.d/osg-contrib.repo
+COPY etc/yum.repos.d/xrootd-stable.repo /etc/yum.repos.d/xrootd-stable.repo
+COPY etc/yum.repos.d/xrootd-experimental.repo /etc/yum.repos.d/xrootd-experimental.repo
 RUN yum update -y -q \
   && yum install -q -y epel-release \
+  && yum remove -y -q xrootd* \
   && yum clean all \
   && rm -fr /var/cache/yum
-RUN cat /etc/yum.repos.d/epel.repo
 RUN yum update -y -q \
   && yum install -q -y --enablerepo=osg-contrib \
   cronie \
@@ -54,15 +57,15 @@ RUN yum update -y -q \
   less \
   supervisor \
   which \
-  xrootd \
-  xrootd-client \
+  xrootd-${XROOTD_VERSION} \
+  xrootd-client-${XROOTD_VERSION} \
+  xrootd-client-libs-${XROOTD_VERSION} \
   xrootd-cmstfc \
-  xrootd-lcmaps \
-  xrootd-scitokens \
-  xrootd-selinux \
+  xrootd-scitokens-${XROOTD_VERSION} \
+  xrootd-selinux-${XROOTD_VERSION} \
   xrootd-server-${XROOTD_VERSION} \
-  xrootd-server-libs \
-  xrootd-voms \
+  xrootd-server-libs-${XROOTD_VERSION} \
+  xrootd-voms-${XROOTD_VERSION} \
   && yum clean all \
   && rm -fr /var/cache/yum
 
@@ -72,6 +75,7 @@ ENV XC_ROOTDIR /xrootd
 # ADD supervisord.d/* /etc/supervisord.d/
 ADD image-config.d/* /etc/osg/image-config.d/
 # ADD etc/xrootd/* /etc/xrootd
+RUN mkdir -p /etc/grid-security
 # link secrets
 RUN rm -f /etc/grid-security/ban-mapfile \
   && rm -f /etc/grid-security/ban-voms-mapfile \
