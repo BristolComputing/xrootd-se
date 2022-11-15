@@ -1,0 +1,6 @@
+[xrootd-experimental]
+name=XRootD Experimental repository
+baseurl=http://cern.ch/storage-ci/xrootd/experimental/epel-7/x86_64/
+gpgcheck=0
+enabled=1
+protect=0

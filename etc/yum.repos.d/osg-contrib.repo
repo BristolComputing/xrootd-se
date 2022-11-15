@@ -1,0 +1,27 @@
+[osg-contrib]
+name=OSG Software for Enterprise Linux 7 - Contributed - $basearch
+#baseurl=https://repo.opensciencegrid.org/osg/3.6/el7/contrib/$basearch
+mirrorlist=https://repo.opensciencegrid.org/mirror/osg/3.6/el7/contrib/$basearch
+priority=98
+enabled=0
+gpgcheck=1
+gpgkey=https://repo.opensciencegrid.org/osg/RPM-GPG-KEY-OSG
+       https://repo.opensciencegrid.org/osg/RPM-GPG-KEY-OSG-2
+
+[osg-contrib-source]
+name=OSG Software for Enterprise Linux 7 - Contributed - $basearch - Source
+baseurl=https://repo.opensciencegrid.org/osg/3.6/el7/contrib/source/SRPMS
+priority=98
+enabled=0
+gpgcheck=1
+gpgkey=https://repo.opensciencegrid.org/osg/RPM-GPG-KEY-OSG
+       https://repo.opensciencegrid.org/osg/RPM-GPG-KEY-OSG-2
+
+[osg-contrib-debuginfo]
+name=OSG Software for Enterprise Linux 7 - Contributed - $basearch - Debug
+baseurl=https://repo.opensciencegrid.org/osg/3.6/el7/contrib/$basearch/debug
+priority=98
+enabled=0
+gpgcheck=1
+gpgkey=https://repo.opensciencegrid.org/osg/RPM-GPG-KEY-OSG
+       https://repo.opensciencegrid.org/osg/RPM-GPG-KEY-OSG-2
