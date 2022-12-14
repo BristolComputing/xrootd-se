@@ -95,8 +95,10 @@ x cmsprod  writecmsdata readcmsdata
 = cmssgm o: cms g: /cms r: lcgadmin
 x cmssgm /xrootd/cms/store/user/sam/ a \
          /xrootd/cms/store/unmerged/SAM/ a \
+         /xrootd/cms/store/temp/user/ a \
          /store/user/sam/ a \
          /store/unmerged/SAM/ a \
+         /store/temp/user/ a \
          readcmsdata
 
 # CMS users have full access to their own directory and temp, and read for CMS
