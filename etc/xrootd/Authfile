@@ -268,7 +268,7 @@ g /mu3e /xrootd/mu3e/user/ a \
 ###############################################################################################
 # Topics to summarize permissions
 t writeopsdata /xrootd/ops/       a \
-               /dpm/phy.bris.ac.uk/home/ops/ a \
+               /dpm/phy.bris.ac.uk/home/ops/ a
 t readopsdata  /xrootd/ops/       lr \
                /dpm/phy.bris.ac.uk/home/ops/ lr
 
