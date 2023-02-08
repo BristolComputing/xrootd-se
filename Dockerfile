@@ -43,12 +43,14 @@ RUN useradd -o -u ${XROOTD_UID} -g ${XROOTD_GID} -s /bin/sh xrootd
 
 COPY etc/yum.repos.d/osg-contrib.repo /etc/yum.repos.d/osg-contrib.repo
 COPY etc/yum.repos.d/xrootd-stable.repo /etc/yum.repos.d/xrootd-stable.repo
-COPY etc/yum.repos.d/xrootd-experimental.repo /etc/yum.repos.d/xrootd-experimental.repo
+# COPY etc/yum.repos.d/xrootd-experimental.repo /etc/yum.repos.d/xrootd-experimental.repo
+
 RUN yum update -y -q \
   && yum install -q -y epel-release \
   && yum remove -y -q xrootd* \
   && yum clean all \
   && rm -fr /var/cache/yum
+
 RUN yum update -y -q \
   && yum install -q -y --enablerepo=osg-contrib \
   cronie \
