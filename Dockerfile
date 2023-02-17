@@ -136,5 +136,7 @@ RUN /tmp/scan_versions.sh
 
 VOLUME /xrootd
 
+RUN cat /etc/xrootd_info/installed_packages.info
+
 COPY etc/supervisord.conf /etc/supervisord.conf
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
