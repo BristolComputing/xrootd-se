@@ -12,7 +12,8 @@
 ## There must be at least one such user in order to create the
 ## private dirs for users willing to store their data in the facility
 u xrootd /xrootd/ a \
-         /store/ a
+         /store/ a \
+         /dpm/phy.bris.ac.uk/home/ a
 
 ###############################################################################################
 ### alice
@@ -237,9 +238,11 @@ g /lsst /xrootd/lsst/user/ a \
 # Topics to summarize permissions
 t writelzdata /xrootd/lz/data/     a \
               /xrootd/lz/mc/       a \
-              /xrootd/lz/temp/     a
+              /xrootd/lz/temp/     a \
+              /dpm/phy.bris.ac.uk/home/lz/ a
 
-t readlzdata /xrootd/lz/      lr
+t readlzdata /xrootd/lz/      lr \
+             /dpm/phy.bris.ac.uk/home/lz/ lr
 
 # "/lz/Role=production" has full access to managed LZ data and read for LZ
 = lzprod o: lz g: /lz r: production
@@ -279,8 +282,10 @@ g /mu3e /xrootd/mu3e/user/ a \
 ### ops
 ###############################################################################################
 # Topics to summarize permissions
-t writeopsdata /xrootd/ops/       a
-t readopsdata  /xrootd/ops/       lr
+t writeopsdata /xrootd/ops/       a \
+               /dpm/phy.bris.ac.uk/home/ops/ a
+t readopsdata  /xrootd/ops/       lr \
+               /dpm/phy.bris.ac.uk/home/ops/ lr
 
 # "/ops/Role=production" has full access to managed OPS data and read for OPS
 = opsprod o: ops g: /ops r: production
