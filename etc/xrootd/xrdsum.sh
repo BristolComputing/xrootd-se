@@ -5,4 +5,5 @@ ECODE=$?
 
 # XRootD expects return on stdout - checksum followed by a new line
 printf "%s\n" "$RESULT"
+# printf "%s" "$RESULT"
 exit "$ECODE"

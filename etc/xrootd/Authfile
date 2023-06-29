@@ -66,6 +66,7 @@ t writecmsdata /xrootd/cms/store/backfill/       a \
                /xrootd/cms/store/test/loadtest/  a \
                /xrootd/cms/store/test/rucio/     a \
                /xrootd/cms/store/unmerged/       a \
+               /xrootd/cms/store/unmerged/SAM/   a \
                /xrootd/cms/store/user/rucio/     a \
                /store/backfill/       a \
                /store/data/           a \
@@ -114,6 +115,20 @@ g /cms  /xrootd/cms/store/user a \
 # # CMS users can read CMS data and have full access to their HOME folders
 # x cmsusr /xrootd/cms/store/user/ a \
 #          readcmsdata
+
+# CMS scitoken
+= cmsprodtkn o: https://cms-auth.web.cern.ch/ g: /cms
+x cmsprodtkn writecmsdata readcmsdata
+
+= cmssgmtkn o: https://cms-auth.web.cern.ch/ g: /cms
+x cmssgmtkn /xrootd/cms/store/user/sam/ a \
+         /xrootd/cms/store/unmerged/SAM/ a \
+         /xrootd/cms/store/temp/user/ a \
+         /store/user/sam/ a \
+         /store/unmerged/SAM/ a \
+         /store/temp/user/ a \
+         readcmsdata
+
 
 ###############################################################################################
 ### dteam
@@ -298,3 +313,4 @@ x wlcgsgm writewlcgdata readwlcgdata
 g /wlcg /xrootd/wlcg/user/ a \
        /xrootd/wlcg/temp/ a \
        readwlcgdata
+
