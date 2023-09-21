@@ -263,15 +263,15 @@ t writemu3edata /xrootd/mu3e/     a
 t readmu3edata /xrootd/mu3e/      lr
 
 # "/mu3e/Role=production" has full access to managed MU3E data and read for MU3E
-= mu3eprod o: mu3e g: /mu3e r: production
+= mu3eprod o: mu3e g: /mu3e.org r: production
 x mu3eprod  writemu3edata readmu3edata
 
 # no entry in grid-mapfile
-= mu3esgm o: mu3e g: /mu3e r: lcgadmin
+= mu3esgm o: mu3e g: /mu3e.org r: lcgadmin
 # "/mu3e/Role=lcgadmin"
 x mu3esgm writemu3edata readmu3edata
 
-g /mu3e /xrootd/mu3e/user/ a \
+g /mu3e.org /xrootd/mu3e/user/ a \
         /xrootd/mu3e/temp/ a \
         readmu3edata
 
