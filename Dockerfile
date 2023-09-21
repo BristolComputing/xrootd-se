@@ -36,13 +36,15 @@ RUN yum update -y -q && \
 # OSG default ID 10940 but we want 1094 (or 1000 for testing)
 ARG XROOTD_GID=1094
 ARG XROOTD_UID=1094
-ARG XROOTD_VERSION="5.5.0-1.el7"
+ARG XROOTD_VERSION="5.6.2-2.el7"
 
 RUN groupadd -o -g ${XROOTD_GID} xrootd
 RUN useradd -o -u ${XROOTD_UID} -g ${XROOTD_GID} -s /bin/sh xrootd
 
+COPY ./etc/yum.repos.d/xrootd-stable.repo /etc/yum.repos.d/xrootd-stable.repo
+
 RUN yum update -y -q \
-  && yum install -q -y epel-release \
+  && yum install -q -y epel-release https://repo.opensciencegrid.org/osg/3.6/osg-3.6-el7-release-latest.rpm \
   && yum clean all \
   && rm -fr /var/cache/yum
 RUN cat /etc/yum.repos.d/epel.repo
