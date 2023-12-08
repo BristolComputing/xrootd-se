@@ -1,5 +1,5 @@
 FROM kreczko/xrootd-hdfs-build
-ARG XROOTD_HDFS_COMMIT_HASH=66d7c97
+ARG XROOTD_HDFS_COMMIT_HASH=25bf07d
 ARG XROOTD_HDFS_BRANCH=kreczko-checksum-debug
 ARG XROOTD_HDFS_REPO=https://github.com/uobdic/xrootd-hdfs.git
 
@@ -36,7 +36,7 @@ RUN yum update -y -q && \
 # OSG default ID 10940 but we want 1094 (or 1000 for testing)
 ARG XROOTD_GID=1094
 ARG XROOTD_UID=1094
-ARG XROOTD_VERSION="5.6.2-2.el7"
+ARG XROOTD_VERSION="5.6.3-2.el7"
 
 RUN groupadd -o -g ${XROOTD_GID} xrootd
 RUN useradd -o -u ${XROOTD_UID} -g ${XROOTD_GID} -s /bin/sh xrootd
@@ -121,7 +121,7 @@ RUN curl -LO "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64
   && conda install -y -q python=3.9 \
   && conda clean --all
 ENV PATH=/miniconda/bin:$PATH
-ARG XRDSUM_VERSION=0.2.3
+ARG XRDSUM_VERSION=2023.12.1
 RUN /miniconda/bin/pip --no-cache-dir install xrdsum[hdfs]==${XRDSUM_VERSION}
 
 # gather info and test gathering script
