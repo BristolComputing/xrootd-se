@@ -36,7 +36,7 @@ RUN yum update -y -q && \
 # OSG default ID 10940 but we want 1094 (or 1000 for testing)
 ARG XROOTD_GID=1094
 ARG XROOTD_UID=1094
-ARG XROOTD_VERSION="5.6.3-2.el7"
+ARG XROOTD_VERSION="5.6.4-1.el7"
 
 RUN groupadd -o -g ${XROOTD_GID} xrootd
 RUN useradd -o -u ${XROOTD_UID} -g ${XROOTD_GID} -s /bin/sh xrootd
