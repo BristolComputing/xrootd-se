@@ -23,9 +23,6 @@
   <!-- Bypass all correct paths -->
   <lfn-to-pfn protocol="direct" path-match="/xrootd/(.*)" result="/xrootd/$1" />
   <pfn-to-lfn protocol="direct" path-match="/xrootd/(.*)" result="/xrootd/$1" />
-
-  <lfn-to-pfn protocol="direct" path-match="/cksums//xrootd/(.*)" result="/cksums/xrootd/$1" />
-  <pfn-to-lfn protocol="direct" path-match="/cksums//xrootd/(.*)" result="/cksums/xrootd/$1" />
   <!-- End bypass -->
 
   <!-- Specific for LoadTest07  -->
@@ -45,8 +42,8 @@
   <!-- End production store -->
 
   <!-- Local file access -->
-  <lfn-to-pfn protocol="file" chain="direct" path-match="(.*)" result="/hdfs/$1" />
-  <pfn-to-lfn protocol="file" chain="direct" path-match="/hdfs/(.*)" result="$1" />
+  <lfn-to-pfn protocol="file" chain="direct" path-match="(.*)" result="/$1" />
+  <pfn-to-lfn protocol="file" chain="direct" path-match="/(.*)" result="$1" />
   <!-- End local file access -->
 
   <!-- Begin xroot -->
