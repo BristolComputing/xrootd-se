@@ -39,8 +39,8 @@
   <!-- End production store -->
 
   <!-- Local file access -->
-  <lfn-to-pfn protocol="file" chain="direct" path-match="(.*)" result="/hdfs/$1" />
-  <pfn-to-lfn protocol="file" chain="direct" path-match="/hdfs/(.*)" result="$1" />
+  <lfn-to-pfn protocol="file" chain="direct" path-match="(.*)" result="$1" />
+  <pfn-to-lfn protocol="file" chain="direct" path-match="(.*)" result="$1" />
   <!-- End local file access -->
 
   <!-- Begin xroot -->
