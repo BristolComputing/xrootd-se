@@ -21,9 +21,8 @@ ExecStart=/usr/bin/docker run --rm --name %n \
     -v /cvmfs/grid.cern.ch/etc/grid-security/certificates:/etc/grid-security/certificates:ro \
     -v /cvmfs/grid.cern.ch/etc/grid-security/vomsdir:/etc/grid-security/vomsdir:ro \
     -v /cvmfs/grid.cern.ch/etc/grid-security/vomses:/etc/grid-security/vomses:ro \
-    -v /opt/cloudera:/opt/cloudera:ro \
-    -v /etc/hadoop:/etc/hadoop:ro \
-    kreczko/xrootdse:3.3.0
+    -v /xrootd:/xrootd \
+    kreczko/xrootdse:5.7.1-0
 ExecStop=/usr/bin/docker stop %n
 ExecReload=/usr/bin/docker exec -ti %n supervisorctl restart cmsd \
     && /usr/bin/docker exec -ti %n supervisorctl restart xrootd-clustered
