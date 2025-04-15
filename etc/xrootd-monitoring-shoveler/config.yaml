@@ -34,7 +34,7 @@ verify: true
 # Export prometheus metrics
 metrics:
   enable: true
-  port: 8000
+  port: 8008
 
 # Directory to store overflow of queue onto disk.
 # The queue keeps 100 messages in memory.  If the shoveler is disconnected from the message bus,

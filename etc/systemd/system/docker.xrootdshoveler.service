@@ -14,8 +14,7 @@ ExecStart=/usr/bin/docker run --rm --name %n \
     -e SSL_CERT_DIR=/cvmfs/grid.cern.ch/etc/grid-security/certificates \
     -v /var/log/xrootd:/var/log/xrootd \
     -v /opt/xrootd-se/etc/xrootd-monitoring-shoveler:/etc/xrootd-monitoring-shoveler:ro \
-    -v opt/xrootd-se/.secrets/prod/etc/grid-security/xrd:/xrd:ro \
-    -v /etc/timezone:/etc/timezone:ro \
+    -v /opt/xrootd-se/.secrets/prod/etc/grid-security/xrd:/xrd:ro \
     -v /etc/localtime:/etc/localtime:ro \
     -v /cvmfs/grid.cern.ch:/cvmfs/grid.cern.ch:ro \
     -v /var/spool/xrootd-monitoring-shoveler:/var/spool/xrootd-monitoring-shoveler \
