@@ -13,7 +13,7 @@ RUN dnf update -y -q && \
 # OSG default ID 10940 but we want 1094 (or 1000 for testing)
 ARG XROOTD_GID=1094
 ARG XROOTD_UID=1094
-ARG XROOTD_VERSION="5.7.1-2.el9"
+ARG XROOTD_VERSION="5.8.1-1.el9"
 
 RUN groupadd -o -g ${XROOTD_GID} xrootd
 RUN useradd -o -u ${XROOTD_UID} -g ${XROOTD_GID} -s /bin/sh xrootd
@@ -22,6 +22,8 @@ RUN dnf update -y -q \
   && dnf install -q -y epel-release https://repo.opensciencegrid.org/osg/23-main/osg-23-main-el9-release-latest.rpm \
   && dnf clean all \
   && rm -fr /var/cache/yum
+
+COPY etc/yum.repos.d/* /etc/yum.repos.d/
 
 RUN dnf update -y -q \
   && dnf install -q -y --enablerepo=osg-contrib \

@@ -1,6 +1,6 @@
 [xrootd-stable]
 name=XRootD Stable repository
-baseurl=https://xrootd.web.cern.ch/xrootd/repo/stable/el7/$basearch/
+baseurl=https://xrootd.web.cern.ch/xrootd/repo/stable/el9/$basearch/
 gpgcheck=1
 enabled=1
 protect=0
