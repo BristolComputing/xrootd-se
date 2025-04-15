@@ -1,0 +1,27 @@
+[Unit]
+Description=xrootd-shoveler
+After=docker.service
+Requires=docker.service
+
+[Service]
+WorkingDirectory=/opt/xrootd-se
+TimeoutStartSec=0
+Restart=always
+ExecStartPre=-/usr/bin/docker kill %n
+ExecStart=/usr/bin/docker run --rm --name %n \
+    --hostname=xrootdsefqdn \
+    --net=host \
+    -e SSL_CERT_DIR=/cvmfs/grid.cern.ch/etc/grid-security/certificates \
+    -v /var/log/xrootd:/var/log/xrootd \
+    -v /opt/xrootd-se/etc/xrootd-monitoring-shoveler:/etc/xrootd-monitoring-shoveler:ro \
+    -v opt/xrootd-se/.secrets/prod/etc/grid-security/xrd:/xrd:ro \
+    -v /etc/timezone:/etc/timezone:ro \
+    -v /etc/localtime:/etc/localtime:ro \
+    -v /cvmfs/grid.cern.ch:/cvmfs/grid.cern.ch:ro \
+    -v /var/spool/xrootd-monitoring-shoveler:/var/spool/xrootd-monitoring-shoveler \
+    hub.opensciencegrid.org/opensciencegrid/xrootd-monitoring-shoveler:latest
+ExecStop=/usr/bin/docker stop %n
+ExecReload=/usr/bin/docker restart %n
+
+[Install]
+WantedBy=default.target
