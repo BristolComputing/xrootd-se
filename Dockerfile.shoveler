@@ -1,0 +1,4 @@
+FROM hub.opensciencegrid.org/opensciencegrid/xrootd-monitoring-shoveler
+
+ENTRYPOINT []
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
